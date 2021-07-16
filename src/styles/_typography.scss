@@ -1,0 +1,84 @@
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: $primaryFont;;
+    color: white;
+}
+
+header h1 {
+    font-size: 50px;
+}
+
+h2,
+.symbol,
+.longName,
+.regularMarketPrice, 
+.regularMarketPriceHeader,
+.closePriceHeader {
+    font-size: 32px;
+}
+
+h3,
+input {
+    font-size: 18px;
+}
+
+span,
+.errorHandling {
+    font-size: 24px;
+}
+
+.symbol,
+.longName {
+    font-weight: bold;
+}
+
+.quotesContent h2 {
+    font-size: 26px;
+    font-style: italic;
+}
+
+label,
+.quotesContent h3,
+.daysChangeDollars,
+.daysChangePercent,
+.previousClosingPrice,
+.openingPrice,
+.regularMarketPrice,
+.daysRange,
+.fiftyTwoWeekRange,
+.regularMarketVolume,
+.averageVolume10Day,
+.closePrice {
+    font-size: 22px;
+}
+
+.symbol,
+.longName,
+.previousClosingPrice,
+.openingPrice,
+.regularMarketPrice,
+.daysRange,
+.fiftyTwoWeekRange,
+.regularMarketVolume,
+.averageVolume10Day,
+.closePrice {
+    color: black;
+}
+
+button {
+    color: white;
+    font-family: $primaryFont;
+}
+
+.profileInformation button,
+footer a {
+    font-size: 14px;
+}
+
+footer a {
+    text-decoration: none;
+    color: white;
+}

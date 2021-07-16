@@ -1,0 +1,225 @@
+body {
+	background-color: $backgroundColor;
+	position: relative;
+}
+
+.wrapper {
+	margin: 0 auto;
+	max-width: 95vw;
+}
+
+header {
+	width: 100%;
+	height: 50px;
+	margin-top: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	.poweredBy {
+		width: 26.5%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-right: 350px;
+	}
+	img {
+		height: 50px;
+		width: 50px;
+		margin-right: 10px;
+	}
+
+	h1 {
+		background: $headerColor;
+		background-clip: text;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		width: 70%;
+	}
+}
+
+.query {
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+	top: 22%;
+	left: 5.3%;
+}
+
+form {
+	width: 520px;
+}
+
+label {
+	width: 25%;
+	font-weight: bold;
+	margin-right: 3%;
+}
+
+input {
+	border-radius: 5px;
+}
+
+input[type="text"] {
+	margin-right: 3%;
+}
+
+input[type="text"]:focus {
+	border: 1px solid rebeccapurple;
+}
+
+input[type="submit"] {
+	border-radius: 5px;
+}
+
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+	background: rgb(82, 79, 79);
+	color: white;
+}
+
+input[type="submit"]:focus {
+	border: 1px solid black;
+}
+
+.marketStatusContainer {
+	margin-top: 1%;
+}
+
+.marketStatusContainer h2 {
+	margin-bottom: 0.5%;
+}
+
+.quote {
+	position: relative;
+	line-height: 22px;
+}
+
+.errorHandling {
+	display: flex;
+	flex-wrap: wrap;
+	width: 550px;
+	position: absolute;
+	bottom: 400px;
+}
+
+.values {
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+	left: 100px;
+	bottom: 80px;
+}
+
+.profileInformation {
+	position: fixed;
+	left: 225px;
+	bottom: 537.5px;
+}
+
+button {
+	border-radius: 5px;
+	border: none;
+	margin-bottom: 2.5px;
+}
+
+.profileInformation button {
+	background-color: #4f00ab;
+	padding: 2px 5px;
+}
+
+.profileInformation button:hover,
+.profileInformation button:focus {
+	background-color: black;
+	color: white;
+}
+
+.profileInformation button:focus {
+	border: 1px solid black;
+}
+
+// Remove margins and use positioning to reduce footprint of the chart
+.graph {
+	display: flex;
+	margin-left: 42%;
+	margin-top: 6.9%;
+}
+
+.movers {
+	position: fixed;
+	right: 10%;
+	bottom: 20px;
+	font-size: 18px;
+}
+
+.gainers,
+.losers {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.movers button:hover,
+.movers button:focus {
+	color: black;
+}
+
+.movers button:focus {
+	border: 1px solid black;
+}
+
+.gainer button {
+	background: green;
+}
+
+.loser button {
+	background: red;
+}
+
+.mostActive button {
+	background: rebeccapurple;
+}
+
+.hidden {
+	display: none;
+}
+
+.showFlex {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.showMarketClosed {
+	position: fixed;
+	bottom: 16%;
+}
+
+.show {
+	display: block;
+}
+
+.positiveValue {
+	color: green;
+}
+
+.negativeValue {
+	color: red;
+}
+
+footer {
+	position: fixed;
+	left: 20px;
+	bottom: 20px;
+}
+
+footer a:hover,
+footer a:focus {
+	color: black;
+}
+
+footer img {
+	width: 30px;
+	height: 30px;
+	margin-right: 15px;
+}
