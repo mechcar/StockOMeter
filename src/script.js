@@ -90,8 +90,10 @@ app.getMovers = function () {
 			$(".movers").toggleClass("showMarketClosed");
 		}
 
+		const moverSize = 5;
+
 		// Populates gainers container with buttons
-		moversObj.gainers.quotes.forEach(function (quote) {
+		moversObj.gainers.quotes.slice(0, moverSize).forEach(function (quote) {
 			const HTMLtoAppend = `<div class="gainer">
                 <button id="moverSymbol" value=${quote.symbol}>${quote.symbol}</button>
             </div>`;
@@ -99,7 +101,7 @@ app.getMovers = function () {
 		});
 
 		// Populates losers container with buttons
-		moversObj.losers.quotes.forEach(function (quote) {
+		moversObj.losers.quotes.slice(0, moverSize).forEach(function (quote) {
 			const HTMLtoAppend = `<div class="loser">
                 <button id="moverSymbol" value=${quote.symbol}>${quote.symbol}</button>
             </div>`;
@@ -115,12 +117,14 @@ app.getMovers = function () {
 			$(".mostActive").toggleClass("showFlex");
 
 			// If market is open, movers container is populated with buttons
-			moversObj.mostActive.quotes.slice(0, 10).forEach(function (quote) {
-				const HTMLtoAppend = `<div class="mostActiveSymbols">
+			moversObj.mostActive.quotes
+				.slice(0, moverSize)
+				.forEach(function (quote) {
+					const HTMLtoAppend = `<div class="mostActiveSymbols">
                     <button id="moverSymbol" value=${quote.symbol}>${quote.symbol}</button>
                 </div>`;
-				$(".mostActive").append(HTMLtoAppend);
-			});
+					$(".mostActive").append(HTMLtoAppend);
+				});
 		}
 
 		// Links the buttons to subsequent API calls to pull up summary and chart data
@@ -160,30 +164,17 @@ app.getSelectValue = function () {
 				)}?`,
 				icon: "warning",
 				confirmButtonText: "Continue",
-				timer: 3000,
+				timer: 5000,
 				timerProgressBar: true,
 			});
 
-			$(".symbol").text(`${app.symbol}`);
-			$(".errorHandling").text(
-				`It appears that ${
-					app.symbol
-				} is not a listed US security. Most symbols traded in the US have a symbol length between 1 and 5 characters. Did you mean ${app.symbol.slice(
-					0,
-					5
-				)}?`
-			);
-			$(".errorHandling").addClass("show");
-			$(".errorHandling").removeClass("hidden");
+			$("#symbol").val("");
 			$(".profileInformation").addClass("show");
 			$(".profileInformation").removeClass("hidden");
 		}
 
 		// Proceeds to summary and chart API calls if the symbol is within accepted length
 		else {
-			$(".errorHandling").empty();
-			$(".errorHandling").removeClass("show");
-			$(".errorHandling").addClass("hidden");
 			$(".quotesContent").removeClass("hidden");
 			$(".quotesContent").addClass("show");
 			$(".chart").removeClass("hidden");
@@ -221,12 +212,7 @@ app.getSummary = function () {
 				timerProgressBar: true,
 			});
 
-			$(".symbol").text(`${app.symbol}`);
-			$(".errorHandling").text(
-				`It appears that ${app.symbol} is not a listed US security. Try another symbol.`
-			);
-			$(".errorHandling").addClass("show");
-			$(".errorHandling").removeClass("hidden");
+			$("#symbol").val("");
 			$(".profileInformation").addClass("show");
 			$(".profileInformation").removeClass("hidden");
 			return;
@@ -256,9 +242,6 @@ app.getSummary = function () {
 		if (!validExchanges.includes(exchange)) {
 			console.log("Error 3!", exchange);
 			$(".symbol").text(`${app.symbol}`);
-			$(".errorHandling").text(
-				`It appears that ${app.symbol} is not a listed US security. It trades on ${exchange}. Try another symbol.`
-			);
 			$(".quotesContent").addClass("hidden");
 			$(".quotesContent").removeClass("show");
 			$(".chart").addClass("hidden");
@@ -273,8 +256,7 @@ app.getSummary = function () {
 				timerProgressBar: true,
 			});
 
-			$(".errorHandling").addClass("show");
-			$(".errorHandling").removeClass("hidden");
+			$("#symbol").val("");
 			$(".profileInformation").addClass("show");
 			$(".profileInformation").removeClass("hidden");
 			return;
@@ -357,12 +339,7 @@ app.getSummary = function () {
 					timerProgressBar: true,
 				});
 
-				$(".symbol").text(`${app.symbol}`);
-				$(".error").text(
-					`It appears that ${app.symbol} is not an active US security. Try another symbol.`
-				);
-				$(".errorHandling").addClass("show");
-				$(".errorHandling").removeClass("hidden");
+				$("#symbol").val("");
 				$(".profileInformation").addClass("show");
 				$(".profileInformation").removeClass("hidden");
 			} else {
@@ -539,9 +516,6 @@ app.getSummary = function () {
 						$(".closePrice").removeClass("negativeValue");
 					}
 				}
-
-				// Clears any text from errorHandling container before next run
-				$(".errorHandling").text("");
 			}
 		}
 	});
@@ -581,6 +555,8 @@ app.getChart = function () {
 				timer: 3000,
 				timerProgressBar: true,
 			});
+
+			$("#symbol").val("");
 		}
 
 		// Error 6: handling symbols without graph timestamp, price or summary data
@@ -600,12 +576,7 @@ app.getChart = function () {
 				timerProgressBar: true,
 			});
 
-			$(".symbol").text(`${app.symbol}`);
-			$(".errorHandling").text(
-				`It appears that ${app.symbol} is not an active US security. It may have been delisted. Try another symbol.`
-			);
-			$(".errorHandling").addClass("show");
-			$(".errorHandling").removeClass("hidden");
+			$("#symbol").val("");
 			$(".profileInformation").addClass("show");
 			$(".profileInformation").removeClass("hidden");
 			return;
@@ -613,9 +584,6 @@ app.getChart = function () {
 
 		// Preparing the page for the addition of summary and graph data, and clearing any errors
 		else {
-			$(".errorHandling").text(``);
-			$(".errorHandling").removeClass("show");
-			$(".errorHandling").addClass("hidden");
 			$(".quotesContent").removeClass("hidden");
 			$(".quotesContent").addClass("show");
 			$(".chart").removeClass("hidden");
@@ -673,6 +641,8 @@ app.getChart = function () {
 				timer: 3000,
 				timerProgressBar: true,
 			});
+
+			$("#symbol").val("");
 		}
 
 		priceAxis = getBusinessHoursIndex(priceAxis);
@@ -704,32 +674,51 @@ app.getChart = function () {
 		google.charts.setOnLoadCallback(drawChart);
 
 		// Checks window size to determine size of graph
+		let heightWidthArr = [];
 		function mediaQuery() {
-			const xl = window.matchMedia("(max-width: 1480px)");
-			const l = window.matchMedia("(max-width: 1280px)");
-			const m = window.matchMedia("(max-width: 768px)");
-			const s = window.matchMedia("(max-width: 425px)");
+			const size9 = window.matchMedia("(max-width: 1280px)");
+			const size8 = window.matchMedia("(max-width: 1080px)");
+			const size7 = window.matchMedia("(max-width: 860px)");
+			const size6 = window.matchMedia("(max-width: 780px)");
+			const size5 = window.matchMedia("(max-width: 710px)");
+			const size4 = window.matchMedia("(max-width: 700px)");
+			const size3 = window.matchMedia("(max-width: 500px)");
+			const size2 = window.matchMedia("(max-width: 450px)");
+			const size1 = window.matchMedia("(max-width: 380px)");
 
-			if (s.matches) {
-				return 350;
-			} else if (m.matches) {
-				return 500;
-			} else if (l.matches) {
-				return 450;
+			if (size1.matches) {
+				heightWidthArr.push(325, 325);
+			} else if (size2.matches) {
+				heightWidthArr.push(350, 350);
+			} else if (size3.matches) {
+				heightWidthArr.push(400, 400);
+			} else if (size4.matches) {
+				heightWidthArr.push(450, 450);
+			} else if (size5.matches) {
+				heightWidthArr.push(300, 300);
+			} else if (size6.matches) {
+				heightWidthArr.push(300, 350);
+			} else if (size7.matches) {
+				heightWidthArr.push(375, 350);
+			} else if (size8.matches) {
+				heightWidthArr.push(400, 450);
+			} else if (size9.matches) {
+				heightWidthArr.push(400, 600);
 			} else {
-				return 650;
+				return null;
 			}
 		}
 
 		// Draws the chart
 		function drawChart() {
+			mediaQuery();
 			const prices = google.visualization.arrayToDataTable(dataTable);
 
 			// Formatting options for graph
 			options = {
 				title: `${app.symbol} - ${app.dateInNewTimezone}`,
-				height: mediaQuery(),
-				width: mediaQuery(),
+				height: heightWidthArr[0],
+				width: heightWidthArr[1],
 
 				hAxis: {
 					title: "Time",
@@ -757,6 +746,10 @@ app.getChart = function () {
 				document.getElementById("graph")
 			);
 			chart.draw(prices, options);
+
+			$(window).resize(function () {
+				drawChart();
+			});
 		}
 	});
 };
@@ -779,6 +772,7 @@ app.getProfile = function () {
 				timer: 3000,
 				timerProgressBar: true,
 			});
+			$("#symbol").val("");
 		} else {
 			$(".profileInformation").empty();
 
@@ -799,6 +793,7 @@ app.getProfile = function () {
 					confirmButtonText: "Return to Quote",
 				});
 			});
+			$("#symbol").val("");
 		}
 	});
 };
@@ -838,10 +833,10 @@ app.dateConversion = function () {
 
 // Checks if current time is within 9:30am - 4:30pm EST/EDT
 app.businessHours = function () {
-	return app.hours >= 9 && app.minutes >= 30 && app.hours <= 16;
+	return (app.hours >= 9 && app.minutes >= 30) || app.hours <= 16;
 
-	// Test for market closed formatting:
-	// return ((app.hours <= 9 && app.minutes <= 30) || (app.hours >= 16))
+	// For market closed styling, uncomment code below:
+	// return (app.hours < 9 && app.minutes < 30) || app.hours > 16;
 };
 
 // Checks if it is a weekday or weekend

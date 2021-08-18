@@ -5,28 +5,26 @@ body {
 
 .wrapper {
 	margin: 0 auto;
-	max-width: 95vw;
+	max-width: 1280px;
+	width: 90%;
 }
 
 header {
-	width: 100%;
-	height: 50px;
-	margin-top: 50px;
+	height: 5rem;
+	margin-top: 5rem;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: space-evenly;
 
 	.poweredBy {
-		width: 26.5%;
 		display: flex;
-		justify-content: center;
 		align-items: center;
-		margin-right: 350px;
+		width: 40rem;
 	}
 	img {
-		height: 50px;
-		width: 50px;
-		margin-right: 10px;
+		height: 5rem;
+		width: 5rem;
+		margin-right: 1.5rem;
 	}
 
 	h1 {
@@ -34,169 +32,175 @@ header {
 		background-clip: text;
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
-		width: 70%;
+		width: 75rem;
+		margin: 0;
 	}
 }
 
 .query {
 	display: flex;
-	flex-direction: column;
-	position: fixed;
-	top: 22%;
-	left: 5.3%;
-}
 
-form {
-	width: 520px;
-}
+	.queryContainer {
+		display: flex;
+		flex-direction: column;
+		padding-top: 5rem;
+	}
 
-label {
-	width: 25%;
-	font-weight: bold;
-	margin-right: 3%;
-}
+	form {
+		display: flex;
 
-input {
-	border-radius: 5px;
-}
+		input {
+			border-radius: 0.5rem;
+		}
 
-input[type="text"] {
-	margin-right: 3%;
-}
+		input[type="text"] {
+			margin-right: 1.5rem;
+			width: clamp(15rem, 14.3878rem + 2.0408vw, 17rem);
+		}
 
-input[type="text"]:focus {
-	border: 1px solid rebeccapurple;
-}
+		input[type="text"]:focus {
+			border: 0.1rem solid rebeccapurple;
+		}
 
-input[type="submit"] {
-	border-radius: 5px;
-}
+		input[type="submit"] {
+			border-radius: 0.5rem;
+		}
 
-input[type="submit"]:hover,
-input[type="submit"]:focus {
-	background: rgb(82, 79, 79);
-	color: white;
-}
+		input[type="submit"]:hover,
+		input[type="submit"]:focus {
+			background: rgb(82, 79, 79);
+			color: white;
+		}
 
-input[type="submit"]:focus {
-	border: 1px solid black;
-}
+		input[type="submit"]:focus {
+			border: 0.1rem solid black;
+		}
+	}
 
-.marketStatusContainer {
-	margin-top: 1%;
-}
+	.marketStatusContainer {
+		h2 {
+			margin-top: 1.5rem;
+			margin-bottom: 0;
+		}
+	}
 
-.marketStatusContainer h2 {
-	margin-bottom: 0.5%;
+	.movers {
+		padding-top: 3.7rem;
+		display: flex;
+		justify-content: space-evenly;
+		width: 70rem;
+
+		.gainers,
+		.losers {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.movers button:hover,
+		.movers button:focus {
+			color: black;
+		}
+
+		.movers button:focus {
+			border: 0.1rem solid black;
+		}
+
+		.gainer button {
+			background: green;
+		}
+
+		.loser button {
+			background: red;
+		}
+
+		.mostActive button {
+			background: rebeccapurple;
+		}
+	}
 }
 
 .quote {
-	position: relative;
-	line-height: 22px;
-}
-
-.errorHandling {
 	display: flex;
-	flex-wrap: wrap;
-	width: 550px;
-	position: absolute;
-	bottom: 400px;
+	position: relative;
+	line-height: 1.6rem;
 }
 
 .values {
 	display: flex;
-	flex-direction: column;
-	position: fixed;
-	left: 100px;
-	bottom: 80px;
+	justify-content: space-between;
+	width: clamp(32rem, 6.5306rem + 84.898vw, 115.2rem);
 }
 
-.profileInformation {
-	position: fixed;
-	left: 225px;
-	bottom: 537.5px;
+.quotesContent {
+	flex-direction: column;
+	width: clamp(30rem, 18.0612rem + 39.7959vw, 69rem);
+
+	h1,
+	h3 {
+		margin: 1.25rem 0;
+	}
+}
+
+.quoteHeading {
+	display: flex;
+	flex-direction: column;
+	padding-top: 1rem;
+
+	.quoteTitle {
+		display: flex;
+		align-items: center;
+		align-content: center;
+
+		h1 {
+			width: 15rem;
+		}
+		.profileInformation button {
+			background-color: #4f00ab;
+			padding: 0.2rem 0.5rem;
+			margin-bottom: 0;
+		}
+
+		.profileInformation button:hover,
+		.profileInformation button:focus {
+			background-color: black;
+			color: white;
+		}
+
+		.profileInformation button:focus {
+			border: 1px solid black;
+		}
+	}
+
+	h1 {
+		margin: 0;
+	}
+}
+
+.chart {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 button {
-	border-radius: 5px;
+	border-radius: 0.5rem;
 	border: none;
-	margin-bottom: 2.5px;
-}
-
-.profileInformation button {
-	background-color: #4f00ab;
-	padding: 2px 5px;
-}
-
-.profileInformation button:hover,
-.profileInformation button:focus {
-	background-color: black;
-	color: white;
-}
-
-.profileInformation button:focus {
-	border: 1px solid black;
-}
-
-// Remove margins and use positioning to reduce footprint of the chart
-.graph {
-	display: flex;
-	margin-left: 42%;
-	margin-top: 6.9%;
-}
-
-.movers {
-	position: fixed;
-	right: 10%;
-	bottom: 20px;
-	font-size: 18px;
-}
-
-.gainers,
-.losers {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-.movers button:hover,
-.movers button:focus {
-	color: black;
-}
-
-.movers button:focus {
-	border: 1px solid black;
-}
-
-.gainer button {
-	background: green;
-}
-
-.loser button {
-	background: red;
-}
-
-.mostActive button {
-	background: rebeccapurple;
+	margin-bottom: 0.3rem;
 }
 
 .hidden {
 	display: none;
 }
 
+.show {
+	display: flex;
+}
+
 .showFlex {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-}
-
-.showMarketClosed {
-	position: fixed;
-	bottom: 16%;
-}
-
-.show {
-	display: block;
 }
 
 .positiveValue {
@@ -207,19 +211,14 @@ button {
 	color: red;
 }
 
-footer {
-	position: fixed;
-	left: 20px;
-	bottom: 20px;
-}
+@media screen and (max-width: 700px) {
+	.values {
+		flex-direction: column;
+		align-items: center;
 
-footer a:hover,
-footer a:focus {
-	color: black;
-}
-
-footer img {
-	width: 30px;
-	height: 30px;
-	margin-right: 15px;
+		.quotesContent,
+		.chart {
+			padding-bottom: 10%;
+		}
+	}
 }

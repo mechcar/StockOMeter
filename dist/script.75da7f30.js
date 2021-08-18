@@ -200,15 +200,16 @@ app.getMovers = function () {
 
     if (app.marketOpen() == "closed") {
       $(".movers").toggleClass("showMarketClosed");
-    } // Populates gainers container with buttons
+    }
 
+    var moverSize = 5; // Populates gainers container with buttons
 
-    moversObj.gainers.quotes.forEach(function (quote) {
+    moversObj.gainers.quotes.slice(0, moverSize).forEach(function (quote) {
       var HTMLtoAppend = "<div class=\"gainer\">\n                <button id=\"moverSymbol\" value=".concat(quote.symbol, ">").concat(quote.symbol, "</button>\n            </div>");
       $(".gainers").append(HTMLtoAppend);
     }); // Populates losers container with buttons
 
-    moversObj.losers.quotes.forEach(function (quote) {
+    moversObj.losers.quotes.slice(0, moverSize).forEach(function (quote) {
       var HTMLtoAppend = "<div class=\"loser\">\n                <button id=\"moverSymbol\" value=".concat(quote.symbol, ">").concat(quote.symbol, "</button>\n            </div>");
       $(".losers").append(HTMLtoAppend);
     }); // Toggles CSS class to display gainers and losers
@@ -219,7 +220,7 @@ app.getMovers = function () {
     if (app.marketOpen() == "open") {
       $(".mostActive").toggleClass("showFlex"); // If market is open, movers container is populated with buttons
 
-      moversObj.mostActive.quotes.slice(0, 10).forEach(function (quote) {
+      moversObj.mostActive.quotes.slice(0, moverSize).forEach(function (quote) {
         var HTMLtoAppend = "<div class=\"mostActiveSymbols\">\n                    <button id=\"moverSymbol\" value=".concat(quote.symbol, ">").concat(quote.symbol, "</button>\n                </div>");
         $(".mostActive").append(HTMLtoAppend);
       });
@@ -254,20 +255,14 @@ app.getSelectValue = function () {
         text: "It appears that ".concat(app.symbol, " is not a listed US security. Most symbols traded in the US have a symbol length between 1 and 5 characters. Did you mean ").concat(app.symbol.slice(0, 5), "?"),
         icon: "warning",
         confirmButtonText: "Continue",
-        timer: 3000,
+        timer: 5000,
         timerProgressBar: true
       });
-      $(".symbol").text("".concat(app.symbol));
-      $(".errorHandling").text("It appears that ".concat(app.symbol, " is not a listed US security. Most symbols traded in the US have a symbol length between 1 and 5 characters. Did you mean ").concat(app.symbol.slice(0, 5), "?"));
-      $(".errorHandling").addClass("show");
-      $(".errorHandling").removeClass("hidden");
+      $("#symbol").val("");
       $(".profileInformation").addClass("show");
       $(".profileInformation").removeClass("hidden");
     } // Proceeds to summary and chart API calls if the symbol is within accepted length
     else {
-        $(".errorHandling").empty();
-        $(".errorHandling").removeClass("show");
-        $(".errorHandling").addClass("hidden");
         $(".quotesContent").removeClass("hidden");
         $(".quotesContent").addClass("show");
         $(".chart").removeClass("hidden");
@@ -301,10 +296,7 @@ app.getSummary = function () {
         timer: 3000,
         timerProgressBar: true
       });
-      $(".symbol").text("".concat(app.symbol));
-      $(".errorHandling").text("It appears that ".concat(app.symbol, " is not a listed US security. Try another symbol."));
-      $(".errorHandling").addClass("show");
-      $(".errorHandling").removeClass("hidden");
+      $("#symbol").val("");
       $(".profileInformation").addClass("show");
       $(".profileInformation").removeClass("hidden");
       return;
@@ -319,7 +311,6 @@ app.getSummary = function () {
     if (!validExchanges.includes(exchange)) {
       console.log("Error 3!", exchange);
       $(".symbol").text("".concat(app.symbol));
-      $(".errorHandling").text("It appears that ".concat(app.symbol, " is not a listed US security. It trades on ").concat(exchange, ". Try another symbol."));
       $(".quotesContent").addClass("hidden");
       $(".quotesContent").removeClass("show");
       $(".chart").addClass("hidden");
@@ -332,8 +323,7 @@ app.getSummary = function () {
         timer: 3000,
         timerProgressBar: true
       });
-      $(".errorHandling").addClass("show");
-      $(".errorHandling").removeClass("hidden");
+      $("#symbol").val("");
       $(".profileInformation").addClass("show");
       $(".profileInformation").removeClass("hidden");
       return;
@@ -404,10 +394,7 @@ app.getSummary = function () {
           timer: 3000,
           timerProgressBar: true
         });
-        $(".symbol").text("".concat(app.symbol));
-        $(".error").text("It appears that ".concat(app.symbol, " is not an active US security. Try another symbol."));
-        $(".errorHandling").addClass("show");
-        $(".errorHandling").removeClass("hidden");
+        $("#symbol").val("");
         $(".profileInformation").addClass("show");
         $(".profileInformation").removeClass("hidden");
       } else {
@@ -508,10 +495,7 @@ app.getSummary = function () {
             } else {
               $(".closePrice").removeClass("negativeValue");
             }
-          } // Clears any text from errorHandling container before next run
-
-
-        $(".errorHandling").text("");
+          }
       }
     }
   });
@@ -548,6 +532,7 @@ app.getChart = function () {
         timer: 3000,
         timerProgressBar: true
       });
+      $("#symbol").val("");
     } // Error 6: handling symbols without graph timestamp, price or summary data
     else if (timeAxis == (undefined || null)) {
         console.log("Error 6!");
@@ -563,18 +548,12 @@ app.getChart = function () {
           timer: 3000,
           timerProgressBar: true
         });
-        $(".symbol").text("".concat(app.symbol));
-        $(".errorHandling").text("It appears that ".concat(app.symbol, " is not an active US security. It may have been delisted. Try another symbol."));
-        $(".errorHandling").addClass("show");
-        $(".errorHandling").removeClass("hidden");
+        $("#symbol").val("");
         $(".profileInformation").addClass("show");
         $(".profileInformation").removeClass("hidden");
         return;
       } // Preparing the page for the addition of summary and graph data, and clearing any errors
       else {
-          $(".errorHandling").text("");
-          $(".errorHandling").removeClass("show");
-          $(".errorHandling").addClass("hidden");
           $(".quotesContent").removeClass("hidden");
           $(".quotesContent").addClass("show");
           $(".chart").removeClass("hidden");
@@ -629,6 +608,7 @@ app.getChart = function () {
         timer: 3000,
         timerProgressBar: true
       });
+      $("#symbol").val("");
     }
 
     priceAxis = getBusinessHoursIndex(priceAxis); // Formats the available price data into either 4 decimals (for stocks under $1) or 2 decimals
@@ -660,31 +640,51 @@ app.getChart = function () {
     });
     google.charts.setOnLoadCallback(drawChart); // Checks window size to determine size of graph
 
-    function mediaQuery() {
-      var xl = window.matchMedia("(max-width: 1480px)");
-      var l = window.matchMedia("(max-width: 1280px)");
-      var m = window.matchMedia("(max-width: 768px)");
-      var s = window.matchMedia("(max-width: 425px)");
+    var heightWidthArr = [];
 
-      if (s.matches) {
-        return 350;
-      } else if (m.matches) {
-        return 500;
-      } else if (l.matches) {
-        return 450;
+    function mediaQuery() {
+      var size9 = window.matchMedia("(max-width: 1280px)");
+      var size8 = window.matchMedia("(max-width: 1080px)");
+      var size7 = window.matchMedia("(max-width: 860px)");
+      var size6 = window.matchMedia("(max-width: 780px)");
+      var size5 = window.matchMedia("(max-width: 710px)");
+      var size4 = window.matchMedia("(max-width: 700px)");
+      var size3 = window.matchMedia("(max-width: 500px)");
+      var size2 = window.matchMedia("(max-width: 450px)");
+      var size1 = window.matchMedia("(max-width: 380px)");
+
+      if (size1.matches) {
+        heightWidthArr.push(325, 325);
+      } else if (size2.matches) {
+        heightWidthArr.push(350, 350);
+      } else if (size3.matches) {
+        heightWidthArr.push(400, 400);
+      } else if (size4.matches) {
+        heightWidthArr.push(450, 450);
+      } else if (size5.matches) {
+        heightWidthArr.push(300, 300);
+      } else if (size6.matches) {
+        heightWidthArr.push(300, 350);
+      } else if (size7.matches) {
+        heightWidthArr.push(375, 350);
+      } else if (size8.matches) {
+        heightWidthArr.push(400, 450);
+      } else if (size9.matches) {
+        heightWidthArr.push(400, 600);
       } else {
-        return 650;
+        return null;
       }
     } // Draws the chart
 
 
     function drawChart() {
+      mediaQuery();
       var prices = google.visualization.arrayToDataTable(dataTable); // Formatting options for graph
 
       options = {
         title: "".concat(app.symbol, " - ").concat(app.dateInNewTimezone),
-        height: mediaQuery(),
-        width: mediaQuery(),
+        height: heightWidthArr[0],
+        width: heightWidthArr[1],
         hAxis: {
           title: "Time",
           titleTextStyle: {
@@ -722,6 +722,9 @@ app.getChart = function () {
 
       var chart = new google.visualization.AreaChart(document.getElementById("graph"));
       chart.draw(prices, options);
+      $(window).resize(function () {
+        drawChart();
+      });
     }
   });
 };
@@ -743,6 +746,7 @@ app.getProfile = function () {
         timer: 3000,
         timerProgressBar: true
       });
+      $("#symbol").val("");
     } else {
       $(".profileInformation").empty(); // Populates profileInformation container
 
@@ -760,6 +764,7 @@ app.getProfile = function () {
           confirmButtonText: "Return to Quote"
         });
       });
+      $("#symbol").val("");
     }
   });
 }; // Helper functions
@@ -795,8 +800,8 @@ app.dateConversion = function () {
 
 
 app.businessHours = function () {
-  return app.hours >= 9 && app.minutes >= 30 && app.hours <= 16; // Test for market closed formatting:
-  // return ((app.hours <= 9 && app.minutes <= 30) || (app.hours >= 16))
+  return app.hours >= 9 && app.minutes >= 30 || app.hours <= 16; // For market closed styling, uncomment code below:
+  // return (app.hours < 9 && app.minutes < 30) || app.hours > 16;
 }; // Checks if it is a weekday or weekend
 
 
@@ -918,7 +923,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59395" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64154" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

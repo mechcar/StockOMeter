@@ -1,43 +1,44 @@
 html {
-    font-size: 62.5%;
+	font-size: 62.5%;
 }
 
 body {
-    font-family: $primaryFont;;
-    color: white;
+	font-family: $primaryFont;
+	color: white;
 }
 
 header h1 {
-    font-size: 50px;
+	font-size: 5rem;
 }
 
 h2,
 .symbol,
 .longName,
-.regularMarketPrice, 
+.regularMarketPrice,
 .regularMarketPriceHeader,
 .closePriceHeader {
-    font-size: 32px;
+	font-size: clamp(2.2rem, 1.8939rem + 1.0204vw, 3.2rem);
 }
 
 h3,
-input {
-    font-size: 18px;
+input,
+.movers {
+	font-size: 1.6rem;
 }
 
 span,
 .errorHandling {
-    font-size: 24px;
+	font-size: 2.4rem;
 }
 
 .symbol,
 .longName {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 .quotesContent h2 {
-    font-size: 26px;
-    font-style: italic;
+	font-size: 2rem;
+	font-style: italic;
 }
 
 label,
@@ -52,7 +53,7 @@ label,
 .regularMarketVolume,
 .averageVolume10Day,
 .closePrice {
-    font-size: 22px;
+	font-size: clamp(1.6rem, 1.4163rem + 0.6122vw, 2.2rem);
 }
 
 .symbol,
@@ -65,20 +66,20 @@ label,
 .regularMarketVolume,
 .averageVolume10Day,
 .closePrice {
-    color: black;
+	color: black;
 }
 
 button {
-    color: white;
-    font-family: $primaryFont;
+	color: white;
+	font-family: $primaryFont;
 }
 
 .profileInformation button,
 footer a {
-    font-size: 14px;
+	font-size: 1.4rem;
 }
 
 footer a {
-    text-decoration: none;
-    color: white;
+	text-decoration: none;
+	color: white;
 }
