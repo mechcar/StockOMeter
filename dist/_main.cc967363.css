@@ -519,7 +519,6 @@ header h1 {
 .chart {
   display: flex;
   align-items: end;
-  justify-content: center;
 }
 
 .graph {
@@ -614,8 +613,6 @@ button {
   }
 
   .values {
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
   }
   .values .quotesContent,
