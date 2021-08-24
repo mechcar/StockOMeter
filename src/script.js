@@ -13,7 +13,7 @@ app.summaryURL =
 	"https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US";
 
 // API requires at least one entry to return a summary, AMC chosen as default
-app.symbol = "AMC";
+app.symbol = "1";
 
 // Function to call settings of top movers API call
 app.movers = function () {
@@ -21,6 +21,19 @@ app.movers = function () {
 		async: true,
 		crossDomain: true,
 		url: "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-movers?region=US&lang=en-US&count=10&start=0",
+		method: "GET",
+		headers: {
+			"x-rapidapi-key": app.financeKey,
+			"x-rapidapi-host": app.financeHost,
+		},
+	};
+};
+
+app.news = function () {
+	return {
+		async: true,
+		crossDomain: true,
+		url: "https://apidojo-yahoo-finance-v1.p.rapidapi.com/news/v2/get-details?uuid=9803606d-a324-3864-83a8-2bd621e6ccbd&region=US",
 		method: "GET",
 		headers: {
 			"x-rapidapi-key": app.financeKey,
@@ -90,35 +103,42 @@ app.getMovers = function () {
 			$(".movers").toggleClass("showMarketClosed");
 		}
 
-		const moverSize = 5;
+		app.moverSize = 6;
 
 		// Populates gainers container with buttons
-		moversObj.gainers.quotes.slice(0, moverSize).forEach(function (quote) {
-			const HTMLtoAppend = `<div class="gainer">
+		moversObj.gainers.quotes
+			.slice(0, app.moverSize)
+			.forEach(function (quote) {
+				const HTMLtoAppend = `<div class="gainer">
                 <button id="moverSymbol" value=${quote.symbol}>${quote.symbol}</button>
             </div>`;
-			$(".gainers").append(HTMLtoAppend);
-		});
+				$(".gainers").append(HTMLtoAppend);
+			});
 
 		// Populates losers container with buttons
-		moversObj.losers.quotes.slice(0, moverSize).forEach(function (quote) {
-			const HTMLtoAppend = `<div class="loser">
+		moversObj.losers.quotes
+			.slice(0, app.moverSize)
+			.forEach(function (quote) {
+				const HTMLtoAppend = `<div class="loser">
                 <button id="moverSymbol" value=${quote.symbol}>${quote.symbol}</button>
             </div>`;
-			$(".losers").append(HTMLtoAppend);
-		});
+				$(".losers").append(HTMLtoAppend);
+			});
 
 		// Toggles CSS class to display gainers and losers
-		$(".gainers").toggleClass("showFlex");
-		$(".losers").toggleClass("showFlex");
+		$(".gainers").toggleClass("show");
+		$(".gainersTitle").toggleClass("show");
+		$(".losers").toggleClass("show");
+		$(".losersTitle").toggleClass("show");
 
 		// Checks if market is open to display most active stocks
 		if (app.marketOpen() == "open") {
-			$(".mostActive").toggleClass("showFlex");
+			$(".mostActive").toggleClass("show");
+			$(".mostActiveTitle").toggleClass("show");
 
 			// If market is open, movers container is populated with buttons
 			moversObj.mostActive.quotes
-				.slice(0, moverSize)
+				.slice(0, app.moverSize)
 				.forEach(function (quote) {
 					const HTMLtoAppend = `<div class="mostActiveSymbols">
                     <button id="moverSymbol" value=${quote.symbol}>${quote.symbol}</button>
@@ -135,6 +155,39 @@ app.getMovers = function () {
 			app.getChart(app.chart());
 			app.getProfile(app.profile());
 		});
+	});
+};
+
+// API call for top movers
+app.getNews = function () {
+	const newsPromise = $.ajax(app.news());
+	return newsPromise.then(function (res) {
+		contents = res.data.contents[0].content;
+		articleTitle = contents.title;
+		articleSummary = contents.summary;
+		articleTickers = contents.finance.stockTickers;
+		articleLink = contents.canonicalUrl.url;
+
+		$(".articleTitle").text(articleTitle);
+		articleTickers.forEach(function (quote) {
+			const HTMLtoAppend = `<div class="articleTicker">
+                <button id="articleSymbol" value=${quote.symbol}>${quote.symbol}</button>
+            </div>`;
+			$(".articleTickers").append(HTMLtoAppend);
+		});
+
+		$("button").click(function (e) {
+			e.preventDefault();
+			app.symbol = $(this).val();
+			app.getSummary(app.summary());
+			app.getChart(app.chart());
+			app.getProfile(app.profile());
+		});
+
+		$(".articleSummary").text(articleSummary);
+		$(".articleLink").attr("href", articleLink);
+		$("#news").addClass("show");
+		$("#news").removeClass("hidden");
 	});
 };
 
@@ -192,8 +245,6 @@ app.getSummary = function () {
 	return summaryPromise.then(function (data) {
 		// Storing values in an accessible variable
 		values = data.quoteResponse.result[0];
-
-		console.log(values);
 
 		// Error 2: if call returns no values
 		if (typeof values === "undefined") {
@@ -484,7 +535,9 @@ app.getSummary = function () {
 						)}`
 					);
 
-					// Displays quotesContent and sets symbol
+					// Hides news, displays quotesContent and sets symbol
+					$("#news").addClass("hidden");
+					$("#news").removeClass("show");
 					$("#quotesContent").addClass("show");
 					$("#quotesContent").removeClass("hidden");
 					$(".symbol").text(`${app.symbol}`);
@@ -675,7 +728,6 @@ app.getChart = function () {
 
 		// Draws the chart
 		function drawChart() {
-
 			const prices = google.visualization.arrayToDataTable(dataTable);
 
 			// Formatting options for graph
@@ -718,9 +770,7 @@ app.getChart = function () {
 app.getProfile = function () {
 	const profilePromise = $.ajax(app.profile());
 	profilePromise.then(function (data) {
-		console.log(data);
 		app.companyDescription = data.assetProfile.longBusinessSummary;
-		console.log(app.companyDescription);
 
 		if (app.companyDescription === undefined) {
 			$(".profileInformation").addClass("hidden");
@@ -794,10 +844,17 @@ app.dateConversion = function () {
 
 // Checks if current time is within 9:30am - 4:30pm EST/EDT
 app.businessHours = function () {
-	return (app.hours >= 9 && app.minutes >= 30) || app.hours <= 16;
+	return (
+		(app.hours >= 9 || (app.hours === 9 && app.minutes >= 30)) &&
+		app.hours < 16
+	);
 
-	// For market closed styling, uncomment code below:
-	// return (app.hours < 9 && app.minutes < 30) || app.hours > 16;
+	// For opposite market  styling, uncomment code below:
+
+	// return (
+	// 	(app.hours <= 9 || (app.hours === 9 && app.minutes <= 30)) &&
+	// 	app.hours > 16
+	// );
 };
 
 // Checks if it is a weekday or weekend
@@ -882,6 +939,7 @@ app.epochToDate = function (epoch) {
 
 // Init
 app.init = function () {
+	this.getNews();
 	this.getMovers();
 	this.getSelectValue();
 };
