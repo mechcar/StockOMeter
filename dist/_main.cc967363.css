@@ -299,8 +299,18 @@ input {
   font-size: 1.6rem;
 }
 
-.movers {
+.movers, .articleTickers {
   font-size: clamp(1.2rem, 1.0495rem + 0.4301vw, 1.6rem);
+}
+
+.news h3 {
+  font-size: clamp(2rem, 1.7742rem + 0.6452vw, 2.6rem);
+}
+.news p {
+  font-size: clamp(1.6rem, 1.4495rem + 0.4301vw, 2rem);
+}
+.news a {
+  font-size: clamp(1.4rem, 1.3247rem + 0.2151vw, 1.6rem);
 }
 
 span,
@@ -362,7 +372,7 @@ footer a {
 }
 
 body {
-  background-color: #c2c8ce;
+  background-color: #959799;
   position: relative;
 }
 
@@ -374,7 +384,7 @@ body {
 
 header {
   height: 5rem;
-  margin-top: 5rem;
+  margin-top: clamp(3rem, 2.2473rem + 2.1505vw, 5rem);
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -382,19 +392,22 @@ header {
 header .poweredBy {
   display: flex;
   align-items: center;
-  width: 40rem;
+  width: clamp(12rem, -5.9487rem + 35.8974vw, 40rem);
 }
 header img {
-  height: 5rem;
-  width: 5rem;
-  margin-right: 1.5rem;
+  height: clamp(3.5rem, 2.5385rem + 1.9231vw, 5rem);
+  width: clamp(3.5rem, 2.5385rem + 1.9231vw, 5rem);
+  margin-right: clamp(0.5rem, -0.1410rem + 1.2821vw, 1.5rem);
 }
-header h1 {
+header a {
+  text-decoration: none;
+}
+header a h1 {
   background: -webkit-linear-gradient(90deg, #254126, #0c863f);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  width: 75rem;
+  width: clamp(28rem, -2.1282rem + 60.2564vw, 75rem);
   margin: 0;
 }
 
@@ -405,7 +418,7 @@ header h1 {
 .query .queryContainer {
   display: flex;
   flex-direction: column;
-  padding-top: 5rem;
+  margin-top: clamp(3rem, 2.2473rem + 2.1505vw, 5rem);
 }
 .query form {
   display: flex;
@@ -464,6 +477,31 @@ header h1 {
   background: rebeccapurple;
 }
 
+.news {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  color: black;
+  outline: 2px solid black;
+  padding: 1rem 0;
+}
+.news .articleTickers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.news button {
+  background-color: #b42288;
+  margin: 0 1.5rem;
+}
+.news button:hover,
+.news button:focus {
+  color: black;
+}
+.news button:focus {
+  border: 0.1rem solid black;
+}
+
 .quote {
   display: flex;
   position: relative;
@@ -473,7 +511,7 @@ header h1 {
 .values {
   display: flex;
   justify-content: space-between;
-  width: clamp(31.5rem, 0.0000rem + 90.0000vw, 115.2rem);
+  width: clamp(31.5rem, 0rem + 90vw, 115.2rem);
 }
 
 .quotesContent {
@@ -540,10 +578,9 @@ button {
   display: flex;
 }
 
-.showFlex {
+.showMarketClosed {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-around;
 }
 
 .positiveValue {
@@ -564,7 +601,6 @@ button {
     padding-bottom: 10%;
   }
   .values .quotesContent {
-    align-items: center;
     width: clamp(45rem, -12.1429rem + 114.2857vw, 85rem);
   }
   .values .quotesContent .stockData {
@@ -574,7 +610,7 @@ button {
     justify-content: space-around;
   }
   .values .graph {
-    width: clamp(30rem, 9.0000rem + 60.0000vw, 60rem);
+    width: clamp(30rem, 9rem + 60vw, 60rem);
   }
 }
 @media screen and (max-width: 750px) {
@@ -582,9 +618,13 @@ button {
     flex-direction: column;
   }
   .query .movers {
-    width: clamp(30rem, -5.0000rem + 100.0000vw, 70rem);
-    padding: 1.5rem 0 3rem 0;
+    width: clamp(30rem, -5rem + 100vw, 70rem);
+    padding-bottom: 1.5rem;
+    padding-top: 0;
     justify-content: space-between;
+  }
+  .query .showMarketClosed {
+    justify-content: space-evenly;
   }
 }
 @media screen and (max-width: 500px) {
@@ -609,27 +649,37 @@ button {
   }
 
   .queryContainer {
-    padding-top: 3.5rem;
+    align-items: center;
   }
 
-  .values {
+  .articleTicker {
+    padding: 1rem 0;
+  }
+
+  .quote {
     justify-content: center;
   }
-  .values .quotesContent,
-.values .chart {
+  .quote .values {
+    justify-content: center;
+  }
+  .quote .values .quotesContent,
+.quote .values .chart {
     padding-bottom: 10%;
   }
-  .values .quotesContent {
-    align-items: center;
+  .quote .values .quotesContent {
     width: clamp(45rem, -12.1429rem + 114.2857vw, 85rem);
   }
-  .values .quotesContent .stockData {
+  .quote .values .quotesContent .quoteHeading {
+    text-align: center;
+  }
+  .quote .values .quotesContent .stockData {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
-  .values .quotesContent .stockData .leftColumn, .values .quotesContent .stockData .rightColumn {
+  .quote .values .quotesContent .stockData .leftColumn,
+.quote .values .quotesContent .stockData .rightColumn {
     width: 30rem;
   }
 }

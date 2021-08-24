@@ -128,13 +128,26 @@ app.financeKey = "57edb9d42emsh2e21cedcaa1cecbp1f2a9ajsn8c9fb7947387";
 app.financeHost = "apidojo-yahoo-finance-v1.p.rapidapi.com";
 app.summaryURL = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US"; // API requires at least one entry to return a summary, AMC chosen as default
 
-app.symbol = "AMC"; // Function to call settings of top movers API call
+app.symbol = "1"; // Function to call settings of top movers API call
 
 app.movers = function () {
   return {
     async: true,
     crossDomain: true,
     url: "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-movers?region=US&lang=en-US&count=10&start=0",
+    method: "GET",
+    headers: {
+      "x-rapidapi-key": app.financeKey,
+      "x-rapidapi-host": app.financeHost
+    }
+  };
+};
+
+app.news = function () {
+  return {
+    async: true,
+    crossDomain: true,
+    url: "https://apidojo-yahoo-finance-v1.p.rapidapi.com/news/v2/get-details?uuid=9803606d-a324-3864-83a8-2bd621e6ccbd&region=US",
     method: "GET",
     headers: {
       "x-rapidapi-key": app.financeKey,
@@ -202,25 +215,28 @@ app.getMovers = function () {
       $(".movers").toggleClass("showMarketClosed");
     }
 
-    var moverSize = 5; // Populates gainers container with buttons
+    app.moverSize = 6; // Populates gainers container with buttons
 
-    moversObj.gainers.quotes.slice(0, moverSize).forEach(function (quote) {
+    moversObj.gainers.quotes.slice(0, app.moverSize).forEach(function (quote) {
       var HTMLtoAppend = "<div class=\"gainer\">\n                <button id=\"moverSymbol\" value=".concat(quote.symbol, ">").concat(quote.symbol, "</button>\n            </div>");
       $(".gainers").append(HTMLtoAppend);
     }); // Populates losers container with buttons
 
-    moversObj.losers.quotes.slice(0, moverSize).forEach(function (quote) {
+    moversObj.losers.quotes.slice(0, app.moverSize).forEach(function (quote) {
       var HTMLtoAppend = "<div class=\"loser\">\n                <button id=\"moverSymbol\" value=".concat(quote.symbol, ">").concat(quote.symbol, "</button>\n            </div>");
       $(".losers").append(HTMLtoAppend);
     }); // Toggles CSS class to display gainers and losers
 
-    $(".gainers").toggleClass("showFlex");
-    $(".losers").toggleClass("showFlex"); // Checks if market is open to display most active stocks
+    $(".gainers").toggleClass("show");
+    $(".gainersTitle").toggleClass("show");
+    $(".losers").toggleClass("show");
+    $(".losersTitle").toggleClass("show"); // Checks if market is open to display most active stocks
 
     if (app.marketOpen() == "open") {
-      $(".mostActive").toggleClass("showFlex"); // If market is open, movers container is populated with buttons
+      $(".mostActive").toggleClass("show");
+      $(".mostActiveTitle").toggleClass("show"); // If market is open, movers container is populated with buttons
 
-      moversObj.mostActive.quotes.slice(0, moverSize).forEach(function (quote) {
+      moversObj.mostActive.quotes.slice(0, app.moverSize).forEach(function (quote) {
         var HTMLtoAppend = "<div class=\"mostActiveSymbols\">\n                    <button id=\"moverSymbol\" value=".concat(quote.symbol, ">").concat(quote.symbol, "</button>\n                </div>");
         $(".mostActive").append(HTMLtoAppend);
       });
@@ -234,6 +250,34 @@ app.getMovers = function () {
       app.getChart(app.chart());
       app.getProfile(app.profile());
     });
+  });
+}; // API call for top movers
+
+
+app.getNews = function () {
+  var newsPromise = $.ajax(app.news());
+  return newsPromise.then(function (res) {
+    contents = res.data.contents[0].content;
+    articleTitle = contents.title;
+    articleSummary = contents.summary;
+    articleTickers = contents.finance.stockTickers;
+    articleLink = contents.canonicalUrl.url;
+    $(".articleTitle").text(articleTitle);
+    articleTickers.forEach(function (quote) {
+      var HTMLtoAppend = "<div class=\"articleTicker\">\n                <button id=\"articleSymbol\" value=".concat(quote.symbol, ">").concat(quote.symbol, "</button>\n            </div>");
+      $(".articleTickers").append(HTMLtoAppend);
+    });
+    $("button").click(function (e) {
+      e.preventDefault();
+      app.symbol = $(this).val();
+      app.getSummary(app.summary());
+      app.getChart(app.chart());
+      app.getProfile(app.profile());
+    });
+    $(".articleSummary").text(articleSummary);
+    $(".articleLink").attr("href", articleLink);
+    $("#news").addClass("show");
+    $("#news").removeClass("hidden");
   });
 }; // Function to handle and register stock symbol from text input
 
@@ -279,8 +323,7 @@ app.getSummary = function () {
   var summaryPromise = $.ajax(app.summary());
   return summaryPromise.then(function (data) {
     // Storing values in an accessible variable
-    values = data.quoteResponse.result[0];
-    console.log(values); // Error 2: if call returns no values
+    values = data.quoteResponse.result[0]; // Error 2: if call returns no values
 
     if (typeof values === "undefined") {
       console.log("Error 2!");
@@ -469,8 +512,10 @@ app.getSummary = function () {
           $(".daysRange").text("$".concat(availableValuesObj.regularMarketDayLow, " - $").concat(availableValuesObj.regularMarketDayHigh));
           $(".fiftyTwoWeekRange").text("$".concat(availableValuesObj.fiftyTwoWeekLow, " - $").concat(availableValuesObj.fiftyTwoWeekHigh));
           $(".regularMarketVolume").text("".concat(availableValuesObj.regularMarketVolume.toLocaleString("en-US")));
-          $(".averageVolume10Day").text("".concat(availableValuesObj.averageVolume10Day.toLocaleString("en-US"))); // Displays quotesContent and sets symbol
+          $(".averageVolume10Day").text("".concat(availableValuesObj.averageVolume10Day.toLocaleString("en-US"))); // Hides news, displays quotesContent and sets symbol
 
+          $("#news").addClass("hidden");
+          $("#news").removeClass("show");
           $("#quotesContent").addClass("show");
           $("#quotesContent").removeClass("hidden");
           $(".symbol").text("".concat(app.symbol));
@@ -693,9 +738,7 @@ app.getChart = function () {
 app.getProfile = function () {
   var profilePromise = $.ajax(app.profile());
   profilePromise.then(function (data) {
-    console.log(data);
     app.companyDescription = data.assetProfile.longBusinessSummary;
-    console.log(app.companyDescription);
 
     if (app.companyDescription === undefined) {
       $(".profileInformation").addClass("hidden");
@@ -761,8 +804,11 @@ app.dateConversion = function () {
 
 
 app.businessHours = function () {
-  return app.hours >= 9 && app.minutes >= 30 || app.hours <= 16; // For market closed styling, uncomment code below:
-  // return (app.hours < 9 && app.minutes < 30) || app.hours > 16;
+  return (app.hours >= 9 || app.hours === 9 && app.minutes >= 30) && app.hours < 16; // For opposite market  styling, uncomment code below:
+  // return (
+  // 	(app.hours <= 9 || (app.hours === 9 && app.minutes <= 30)) &&
+  // 	app.hours > 16
+  // );
 }; // Checks if it is a weekday or weekend
 
 
@@ -848,6 +894,7 @@ app.epochToDate = function (epoch) {
 
 
 app.init = function () {
+  this.getNews();
   this.getMovers();
   this.getSelectValue();
 }; // DocReady
@@ -884,7 +931,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57112" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49635" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

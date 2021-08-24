@@ -28,7 +28,7 @@
 					/></a>
 					<h3>Powered by Yahoo Finance</h3>
 				</div>
-				<h1>$ StockOMeter $</h1>
+				<a href="https://stockometer.netlify.app"><h1>$ StockOMeter $</h1></a>
 			</header>
 
 			<main>
@@ -58,16 +58,28 @@
 
 					<div class="movers wrapper">
 						<div class="gainers hidden">
-							<p>Top Gainers:</p>
+							<p class="gainersTitle hidden">Top Gainers:</p>
 						</div>
 
 						<div class="losers hidden">
-							<p>Day's Losers:</p>
+							<p class="losersTitle hidden">Day's Losers:</p>
 						</div>
 
 						<div class="mostActive hidden">
-							<p>Most Active Stocks:</p>
+							<p class="mostActiveTitle hidden">
+								Most Active Stocks:
+							</p>
 						</div>
+					</div>
+				</section>
+
+				<section class="news wrapper hidden" id='news'>
+					<div class="article wrapper">
+						<h3 class="articleTitle"></h3>
+						<p class="articleAuthor"></p>
+						<div class="articleTickers wrapper"></div>
+						<p class="articleSummary"></p>
+						<a class="articleLink" href=""><button>Read More</button></a>
 					</div>
 				</section>
 
@@ -79,7 +91,9 @@
 									<div class="quoteHeading">
 										<div class="quoteTitle">
 											<h1 class="symbol"></h1>
-											<div class="profileInformation"></div>
+											<div
+												class="profileInformation"
+											></div>
 										</div>
 										<h2 class="longName"></h2>
 									</div>

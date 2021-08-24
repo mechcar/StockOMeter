@@ -11,7 +11,7 @@ body {
 
 header {
 	height: 5rem;
-	margin-top: 5rem;
+	margin-top: clamp(3rem, 2.2473rem + 2.1505vw, 5rem);
 	display: flex;
 	align-items: center;
 	justify-content: space-evenly;
@@ -19,22 +19,27 @@ header {
 	.poweredBy {
 		display: flex;
 		align-items: center;
-		width: 40rem;
+		width: clamp(12rem, -5.9487rem + 35.8974vw, 40rem);
 	}
 	img {
-		height: 5rem;
-		width: 5rem;
-		margin-right: 1.5rem;
+		height: clamp(3.5rem, 2.5385rem + 1.9231vw, 5rem);
+		width: clamp(3.5rem, 2.5385rem + 1.9231vw, 5rem);
+		margin-right: clamp(0.5rem, -0.1410rem + 1.2821vw, 1.5rem);
 	}
 
-	h1 {
-		background: $headerColor;
-		background-clip: text;
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		width: 75rem;
-		margin: 0;
+	a {
+		text-decoration: none;
+
+		h1 {
+			background: $headerColor;
+			background-clip: text;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			width: clamp(28rem, -2.1282rem + 60.2564vw, 75rem);
+			margin: 0;
+		}
 	}
+
 }
 
 .query {
@@ -44,7 +49,7 @@ header {
 	.queryContainer {
 		display: flex;
 		flex-direction: column;
-		padding-top: 5rem;
+		margin-top: clamp(3rem, 2.2473rem + 2.1505vw, 5rem);
 	}
 
 	form {
@@ -121,6 +126,33 @@ header {
 	}
 }
 
+.news {
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	color: black;
+	outline: 2px solid black;
+	padding: 1rem 0;
+
+	.articleTickers {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	button {
+		background-color: rgb(180, 34, 136);
+		margin: 0 1.5rem;
+	}
+
+	button:hover,
+	button:focus {
+		color: black;
+	}
+	button:focus {
+		border: 0.1rem solid black;
+	}
+}
+
 .quote {
 	display: flex;
 	position: relative;
@@ -130,7 +162,7 @@ header {
 .values {
 	display: flex;
 	justify-content: space-between;
-	width: clamp(31.5rem, 0.0000rem + 90.0000vw, 115.2rem);
+	width: clamp(31.5rem, 0rem + 90vw, 115.2rem);
 }
 
 .quotesContent {
@@ -182,7 +214,6 @@ header {
 .chart {
 	display: flex;
 	align-items: end;
-	justify-content: center;
 }
 
 .graph {
@@ -204,10 +235,9 @@ button {
 	display: flex;
 }
 
-.showFlex {
+.showMarketClosed {
 	display: flex;
-	flex-direction: column;
-	align-items: center;
+	justify-content: space-around;
 }
 
 .positiveValue {
@@ -229,7 +259,6 @@ button {
 		}
 
 		.quotesContent {
-			align-items: center;
 			width: clamp(45rem, -12.1429rem + 114.2857vw, 85rem);
 
 			.stockData {
@@ -238,11 +267,10 @@ button {
 				align-items: end;
 				justify-content: space-around;
 			}
-
 		}
 
 		.graph {
-			width: clamp(30rem, 9.0000rem + 60.0000vw, 60rem);
+			width: clamp(30rem, 9rem + 60vw, 60rem);
 		}
 	}
 }
@@ -252,13 +280,17 @@ button {
 		flex-direction: column;
 
 		.movers {
-			width: clamp(30rem, -5.0000rem + 100.0000vw, 70rem);
-			padding: 1.5rem 0 3rem 0;
+			width: clamp(30rem, -5rem + 100vw, 70rem);
+			padding-bottom: 1.5rem;
+			padding-top: 0;
 			justify-content: space-between;
+		}
+
+		.showMarketClosed {
+			justify-content: space-evenly;
 		}
 	}
 }
-
 
 @media screen and (max-width: 500px) {
 	header {
@@ -285,36 +317,42 @@ button {
 	}
 
 	.queryContainer {
-		padding-top: 3.5rem;
+		align-items: center;
 	}
 
-	.values {
-		flex-direction: column;
-		align-items: center;
+	.articleTicker {
+		padding: 1rem 0;
+	}
+
+	.quote {
 		justify-content: center;
+		.values {
+			justify-content: center;
 
-		.quotesContent,
-		.chart {
-			padding-bottom: 10%;
-		}
-
-		.quotesContent {
-			align-items: center;
-			width: clamp(45rem, -12.1429rem + 114.2857vw, 85rem);
-
-			.stockData {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-
-				.leftColumn, .rightColumn {
-					width: 30rem;
-				}
+			.quotesContent,
+			.chart {
+				padding-bottom: 10%;
 			}
 
-		}
+			.quotesContent {
+				width: clamp(45rem, -12.1429rem + 114.2857vw, 85rem);
 
-		
+				.quoteHeading {
+					text-align: center;
+				}
+
+				.stockData {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
+
+					.leftColumn,
+					.rightColumn {
+						width: 30rem;
+					}
+				}
+			}
+		}
 	}
 }
