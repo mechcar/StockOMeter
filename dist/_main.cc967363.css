@@ -273,8 +273,12 @@ body {
   color: white;
 }
 
+.poweredBy h3 {
+  font-size: clamp(1rem, 0.7742rem + 0.6452vw, 1.6rem);
+}
+
 header h1 {
-  font-size: 5rem;
+  font-size: clamp(3rem, 2.2473rem + 2.1505vw, 5rem);
 }
 
 h2,
@@ -286,10 +290,17 @@ h2,
   font-size: clamp(2.2rem, 1.8939rem + 1.0204vw, 3.2rem);
 }
 
+.marketStatus h2 {
+  font-size: clamp(1.8rem, 1.7247rem + 0.2151vw, 2rem);
+}
+
 h3,
-input,
-.movers {
+input {
   font-size: 1.6rem;
+}
+
+.movers {
+  font-size: clamp(1.2rem, 1.0495rem + 0.4301vw, 1.6rem);
 }
 
 span,
@@ -389,6 +400,7 @@ header h1 {
 
 .query {
   display: flex;
+  padding-bottom: 2.5%;
 }
 .query .queryContainer {
   display: flex;
@@ -461,7 +473,7 @@ header h1 {
 .values {
   display: flex;
   justify-content: space-between;
-  width: clamp(32rem, 6.5306rem + 84.898vw, 115.2rem);
+  width: clamp(31.5rem, 0.0000rem + 90.0000vw, 115.2rem);
 }
 
 .quotesContent {
@@ -470,7 +482,8 @@ header h1 {
 }
 .quotesContent h1,
 .quotesContent h3 {
-  margin: 1.25rem 0;
+  margin-top: clamp(1.25rem, 1.0618rem + 0.5376vw, 1.75rem);
+  margin-bottom: 0;
 }
 
 .quoteHeading {
@@ -505,8 +518,13 @@ header h1 {
 
 .chart {
   display: flex;
-  align-items: center;
+  align-items: end;
   justify-content: center;
+}
+
+.graph {
+  width: clamp(40rem, 0.4651rem + 46.5116vw, 60rem);
+  min-height: 400px;
 }
 
 button {
@@ -537,7 +555,7 @@ button {
   color: red;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 850px) {
   .values {
     flex-direction: column;
     align-items: center;
@@ -545,6 +563,77 @@ button {
   .values .quotesContent,
 .values .chart {
     padding-bottom: 10%;
+  }
+  .values .quotesContent {
+    align-items: center;
+    width: clamp(45rem, -12.1429rem + 114.2857vw, 85rem);
+  }
+  .values .quotesContent .stockData {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    justify-content: space-around;
+  }
+  .values .graph {
+    width: clamp(30rem, 9.0000rem + 60.0000vw, 60rem);
+  }
+}
+@media screen and (max-width: 750px) {
+  .query {
+    flex-direction: column;
+  }
+  .query .movers {
+    width: clamp(30rem, -5.0000rem + 100.0000vw, 70rem);
+    padding: 1.5rem 0 3rem 0;
+    justify-content: space-between;
+  }
+}
+@media screen and (max-width: 500px) {
+  header {
+    flex-direction: column-reverse;
+    align-content: center;
+  }
+  header .poweredBy {
+    display: flex;
+    justify-content: center;
+    padding-top: 2.5%;
+    width: 20rem;
+  }
+  header .poweredBy img {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+  header h1 {
+    width: 30rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .queryContainer {
+    padding-top: 3.5rem;
+  }
+
+  .values {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .values .quotesContent,
+.values .chart {
+    padding-bottom: 10%;
+  }
+  .values .quotesContent {
+    align-items: center;
+    width: clamp(45rem, -12.1429rem + 114.2857vw, 85rem);
+  }
+  .values .quotesContent .stockData {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .values .quotesContent .stockData .leftColumn, .values .quotesContent .stockData .rightColumn {
+    width: 30rem;
   }
 }
 
