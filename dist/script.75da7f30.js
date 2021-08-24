@@ -638,53 +638,13 @@ app.getChart = function () {
     google.charts.load("current", {
       packages: ["corechart"]
     });
-    google.charts.setOnLoadCallback(drawChart); // Checks window size to determine size of graph
-
-    var heightWidthArr = [];
-
-    function mediaQuery() {
-      var size9 = window.matchMedia("(max-width: 1280px)");
-      var size8 = window.matchMedia("(max-width: 1080px)");
-      var size7 = window.matchMedia("(max-width: 860px)");
-      var size6 = window.matchMedia("(max-width: 780px)");
-      var size5 = window.matchMedia("(max-width: 710px)");
-      var size4 = window.matchMedia("(max-width: 700px)");
-      var size3 = window.matchMedia("(max-width: 500px)");
-      var size2 = window.matchMedia("(max-width: 450px)");
-      var size1 = window.matchMedia("(max-width: 380px)");
-
-      if (size1.matches) {
-        heightWidthArr.push(325, 325);
-      } else if (size2.matches) {
-        heightWidthArr.push(350, 350);
-      } else if (size3.matches) {
-        heightWidthArr.push(400, 400);
-      } else if (size4.matches) {
-        heightWidthArr.push(450, 450);
-      } else if (size5.matches) {
-        heightWidthArr.push(300, 300);
-      } else if (size6.matches) {
-        heightWidthArr.push(300, 350);
-      } else if (size7.matches) {
-        heightWidthArr.push(375, 350);
-      } else if (size8.matches) {
-        heightWidthArr.push(400, 450);
-      } else if (size9.matches) {
-        heightWidthArr.push(400, 600);
-      } else {
-        return null;
-      }
-    } // Draws the chart
-
+    google.charts.setOnLoadCallback(drawChart); // Draws the chart
 
     function drawChart() {
-      mediaQuery();
       var prices = google.visualization.arrayToDataTable(dataTable); // Formatting options for graph
 
       options = {
         title: "".concat(app.symbol, " - ").concat(app.dateInNewTimezone),
-        height: heightWidthArr[0],
-        width: heightWidthArr[1],
         hAxis: {
           title: "Time",
           titleTextStyle: {
@@ -722,10 +682,11 @@ app.getChart = function () {
 
       var chart = new google.visualization.AreaChart(document.getElementById("graph"));
       chart.draw(prices, options);
-      $(window).resize(function () {
-        drawChart();
-      });
     }
+
+    $(window).resize(function () {
+      drawChart();
+    });
   });
 };
 
@@ -923,7 +884,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56573" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58855" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

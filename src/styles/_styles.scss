@@ -39,6 +39,7 @@ header {
 
 .query {
 	display: flex;
+	padding-bottom: 2.5%;
 
 	.queryContainer {
 		display: flex;
@@ -129,7 +130,7 @@ header {
 .values {
 	display: flex;
 	justify-content: space-between;
-	width: clamp(32rem, 6.5306rem + 84.898vw, 115.2rem);
+	width: clamp(31.5rem, 0.0000rem + 90.0000vw, 115.2rem);
 }
 
 .quotesContent {
@@ -138,7 +139,8 @@ header {
 
 	h1,
 	h3 {
-		margin: 1.25rem 0;
+		margin-top: clamp(1.25rem, 1.0618rem + 0.5376vw, 1.75rem);
+		margin-bottom: 0;
 	}
 }
 
@@ -179,8 +181,13 @@ header {
 
 .chart {
 	display: flex;
-	align-items: center;
+	align-items: end;
 	justify-content: center;
+}
+
+.graph {
+	width: clamp(40rem, 0.4651rem + 46.5116vw, 60rem);
+	min-height: 400px;
 }
 
 button {
@@ -211,7 +218,7 @@ button {
 	color: red;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 850px) {
 	.values {
 		flex-direction: column;
 		align-items: center;
@@ -220,5 +227,94 @@ button {
 		.chart {
 			padding-bottom: 10%;
 		}
+
+		.quotesContent {
+			align-items: center;
+			width: clamp(45rem, -12.1429rem + 114.2857vw, 85rem);
+
+			.stockData {
+				display: flex;
+				flex-direction: row;
+				align-items: end;
+				justify-content: space-around;
+			}
+
+		}
+
+		.graph {
+			width: clamp(30rem, 9.0000rem + 60.0000vw, 60rem);
+		}
+	}
+}
+
+@media screen and (max-width: 750px) {
+	.query {
+		flex-direction: column;
+
+		.movers {
+			width: clamp(30rem, -5.0000rem + 100.0000vw, 70rem);
+			padding: 1.5rem 0 3rem 0;
+			justify-content: space-between;
+		}
+	}
+}
+
+
+@media screen and (max-width: 500px) {
+	header {
+		flex-direction: column-reverse;
+		align-content: center;
+
+		.poweredBy {
+			display: flex;
+			justify-content: center;
+			padding-top: 2.5%;
+			width: 20rem;
+
+			img {
+				height: 2.5rem;
+				width: 2.5rem;
+			}
+		}
+
+		h1 {
+			width: 30rem;
+			display: flex;
+			justify-content: center;
+		}
+	}
+
+	.queryContainer {
+		padding-top: 3.5rem;
+	}
+
+	.values {
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+
+		.quotesContent,
+		.chart {
+			padding-bottom: 10%;
+		}
+
+		.quotesContent {
+			align-items: center;
+			width: clamp(45rem, -12.1429rem + 114.2857vw, 85rem);
+
+			.stockData {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+
+				.leftColumn, .rightColumn {
+					width: 30rem;
+				}
+			}
+
+		}
+
+		
 	}
 }

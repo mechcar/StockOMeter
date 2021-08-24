@@ -673,52 +673,14 @@ app.getChart = function () {
 		google.charts.load("current", { packages: ["corechart"] });
 		google.charts.setOnLoadCallback(drawChart);
 
-		// Checks window size to determine size of graph
-		let heightWidthArr = [];
-		function mediaQuery() {
-			const size9 = window.matchMedia("(max-width: 1280px)");
-			const size8 = window.matchMedia("(max-width: 1080px)");
-			const size7 = window.matchMedia("(max-width: 860px)");
-			const size6 = window.matchMedia("(max-width: 780px)");
-			const size5 = window.matchMedia("(max-width: 710px)");
-			const size4 = window.matchMedia("(max-width: 700px)");
-			const size3 = window.matchMedia("(max-width: 500px)");
-			const size2 = window.matchMedia("(max-width: 450px)");
-			const size1 = window.matchMedia("(max-width: 380px)");
-
-			if (size1.matches) {
-				heightWidthArr.push(325, 325);
-			} else if (size2.matches) {
-				heightWidthArr.push(350, 350);
-			} else if (size3.matches) {
-				heightWidthArr.push(400, 400);
-			} else if (size4.matches) {
-				heightWidthArr.push(450, 450);
-			} else if (size5.matches) {
-				heightWidthArr.push(300, 300);
-			} else if (size6.matches) {
-				heightWidthArr.push(300, 350);
-			} else if (size7.matches) {
-				heightWidthArr.push(375, 350);
-			} else if (size8.matches) {
-				heightWidthArr.push(400, 450);
-			} else if (size9.matches) {
-				heightWidthArr.push(400, 600);
-			} else {
-				return null;
-			}
-		}
-
 		// Draws the chart
 		function drawChart() {
-			mediaQuery();
+
 			const prices = google.visualization.arrayToDataTable(dataTable);
 
 			// Formatting options for graph
 			options = {
 				title: `${app.symbol} - ${app.dateInNewTimezone}`,
-				height: heightWidthArr[0],
-				width: heightWidthArr[1],
 
 				hAxis: {
 					title: "Time",
@@ -746,11 +708,10 @@ app.getChart = function () {
 				document.getElementById("graph")
 			);
 			chart.draw(prices, options);
-
-			$(window).resize(function () {
-				drawChart();
-			});
 		}
+		$(window).resize(function () {
+			drawChart();
+		});
 	});
 };
 
