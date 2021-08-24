@@ -42,6 +42,19 @@ app.news = function () {
 	};
 };
 
+app.watchlists = function () {
+	return {
+		async: true,
+		crossDomain: true,
+		url: "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-popular-watchlists",
+		method: "GET",
+		headers: {
+			"x-rapidapi-key": app.financeKey,
+			"x-rapidapi-host": app.financeHost,
+		},
+	};
+};
+
 // Function to call settings of stock summary API call
 app.summary = function () {
 	return {
@@ -188,6 +201,37 @@ app.getNews = function () {
 		$(".articleLink").attr("href", articleLink);
 		$("#news").addClass("show");
 		$("#news").removeClass("hidden");
+	});
+};
+
+app.getWatchlists = function () {
+	const watchlistsPromise = $.ajax(app.watchlists());
+	return watchlistsPromise.then(function (res) {
+		watchlists = res.finance.result[0].portfolios.splice(0, 5);
+		console.log(watchlists);
+
+		watchlists.forEach(function (watchlist) {
+			const HTMLtoAppend = `<div class="popularWatchlist">
+				<h3>${watchlist.name}</h3>
+				<button class='watchlistProfile' id=${watchlist.pfId}>Read More</button>
+            </div>`;
+			$(".watchlistsContainer").append(HTMLtoAppend);
+			$(".watchlistProfile").click(function (e) {
+				e.stopImmediatePropagation();
+				e.preventDefault();
+
+				Swal.fire({
+					title:  watchlist.name,
+					text: $("<div>").html(watchlist.description).text(),
+					icon: "info",
+					width: 600,
+					confirmButtonText: "Return to Watchlists",
+				});
+			});
+		});
+
+		$("#watchlists").addClass("show");
+		$("#watchlists").removeClass("hidden");
 	});
 };
 
@@ -940,6 +984,7 @@ app.epochToDate = function (epoch) {
 // Init
 app.init = function () {
 	this.getNews();
+	this.getWatchlists();
 	this.getMovers();
 	this.getSelectValue();
 };

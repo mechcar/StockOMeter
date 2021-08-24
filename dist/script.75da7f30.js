@@ -154,6 +154,19 @@ app.news = function () {
       "x-rapidapi-host": app.financeHost
     }
   };
+};
+
+app.watchlists = function () {
+  return {
+    async: true,
+    crossDomain: true,
+    url: "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-popular-watchlists",
+    method: "GET",
+    headers: {
+      "x-rapidapi-key": app.financeKey,
+      "x-rapidapi-host": app.financeHost
+    }
+  };
 }; // Function to call settings of stock summary API call
 
 
@@ -278,6 +291,31 @@ app.getNews = function () {
     $(".articleLink").attr("href", articleLink);
     $("#news").addClass("show");
     $("#news").removeClass("hidden");
+  });
+};
+
+app.getWatchlists = function () {
+  var watchlistsPromise = $.ajax(app.watchlists());
+  return watchlistsPromise.then(function (res) {
+    watchlists = res.finance.result[0].portfolios.splice(0, 5);
+    console.log(watchlists);
+    watchlists.forEach(function (watchlist) {
+      var HTMLtoAppend = "<div class=\"popularWatchlist\">\n\t\t\t\t<h3>".concat(watchlist.name, "</h3>\n\t\t\t\t<button class='watchlistProfile' id=").concat(watchlist.pfId, ">Read More</button>\n            </div>");
+      $(".watchlistsContainer").append(HTMLtoAppend);
+      $(".watchlistProfile").click(function (e) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        Swal.fire({
+          title: watchlist.name,
+          text: $("<div>").html(watchlist.description).text(),
+          icon: "info",
+          width: 600,
+          confirmButtonText: "Return to Watchlists"
+        });
+      });
+    });
+    $("#watchlists").addClass("show");
+    $("#watchlists").removeClass("hidden");
   });
 }; // Function to handle and register stock symbol from text input
 
@@ -895,6 +933,7 @@ app.epochToDate = function (epoch) {
 
 app.init = function () {
   this.getNews();
+  this.getWatchlists();
   this.getMovers();
   this.getSelectValue();
 }; // DocReady
@@ -931,7 +970,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49635" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61879" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
