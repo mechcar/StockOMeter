@@ -143,19 +143,6 @@ app.movers = function () {
   };
 };
 
-app.news = function () {
-  return {
-    async: true,
-    crossDomain: true,
-    url: "https://apidojo-yahoo-finance-v1.p.rapidapi.com/news/v2/get-details?uuid=9803606d-a324-3864-83a8-2bd621e6ccbd&region=US",
-    method: "GET",
-    headers: {
-      "x-rapidapi-key": app.financeKey,
-      "x-rapidapi-host": app.financeHost
-    }
-  };
-};
-
 app.watchlists = function () {
   return {
     async: true,
@@ -240,14 +227,20 @@ app.getMovers = function () {
       $(".losers").append(HTMLtoAppend);
     }); // Toggles CSS class to display gainers and losers
 
-    $(".gainers").toggleClass("show");
-    $(".gainersTitle").toggleClass("show");
-    $(".losers").toggleClass("show");
-    $(".losersTitle").toggleClass("show"); // Checks if market is open to display most active stocks
+    $(".gainers").addClass("show");
+    $(".gainers").removeClass("hidden");
+    $(".gainersTitle").addClass("show");
+    $(".gainersTitle").removeClass("hidden");
+    $(".losers").addClass("show");
+    $(".losers").removeClass("hidden");
+    $(".losersTitle").addClass("show");
+    $(".losersTitle").removeClass("hidden"); // Checks if market is open to display most active stocks
 
     if (app.marketOpen() == "open") {
-      $(".mostActive").toggleClass("show");
-      $(".mostActiveTitle").toggleClass("show"); // If market is open, movers container is populated with buttons
+      $(".mostActive").addClass("showMostActive");
+      $(".mostActive").removeClass("hidden");
+      $(".mostActiveTitle").addClass("show");
+      $(".mostActiveTitle").removeClass("hidden"); // If market is open, movers container is populated with buttons
 
       moversObj.mostActive.quotes.slice(0, app.moverSize).forEach(function (quote) {
         var HTMLtoAppend = "<div class=\"mostActiveSymbols\">\n                    <button id=\"moverSymbol\" value=".concat(quote.symbol, ">").concat(quote.symbol, "</button>\n                </div>");
@@ -264,58 +257,22 @@ app.getMovers = function () {
       app.getProfile(app.profile());
     });
   });
-}; // API call for top movers
-
-
-app.getNews = function () {
-  var newsPromise = $.ajax(app.news());
-  return newsPromise.then(function (res) {
-    contents = res.data.contents[0].content;
-    articleTitle = contents.title;
-    articleSummary = contents.summary;
-    articleTickers = contents.finance.stockTickers;
-    articleLink = contents.canonicalUrl.url;
-    $(".articleTitle").text(articleTitle);
-    articleTickers.forEach(function (quote) {
-      var HTMLtoAppend = "<div class=\"articleTicker\">\n                <button id=\"articleSymbol\" value=".concat(quote.symbol, ">").concat(quote.symbol, "</button>\n            </div>");
-      $(".articleTickers").append(HTMLtoAppend);
-    });
-    $("button").click(function (e) {
-      e.preventDefault();
-      app.symbol = $(this).val();
-      app.getSummary(app.summary());
-      app.getChart(app.chart());
-      app.getProfile(app.profile());
-    });
-    $(".articleSummary").text(articleSummary);
-    $(".articleLink").attr("href", articleLink);
-    $("#news").addClass("show");
-    $("#news").removeClass("hidden");
-  });
 };
 
 app.getWatchlists = function () {
   var watchlistsPromise = $.ajax(app.watchlists());
   return watchlistsPromise.then(function (res) {
-    watchlists = res.finance.result[0].portfolios.splice(0, 5);
+    var watchlists = res.finance.result[0].portfolios.splice(0, 8);
+    console.log(res.finance.result[0].portfolios);
     console.log(watchlists);
     watchlists.forEach(function (watchlist) {
-      var HTMLtoAppend = "<div class=\"popularWatchlist\">\n\t\t\t\t<h3>".concat(watchlist.name, "</h3>\n\t\t\t\t<button class='watchlistProfile' id=").concat(watchlist.pfId, ">Read More</button>\n            </div>");
+      var HTMLtoAppend = "<div class=\"popularWatchlist\">\n\t\t\t\t<h3>".concat(watchlist.name, "</h3>\n\t\t\t\t<div class='watchlistInfo'> \n\t\t\t\t<img src=").concat(watchlist.backgroundImage["ios:size=card_small_fixed"].url, " alt=", "".concat(watchlist.name, " Cover Image"), ">\n\t\t\t\t<p>").concat(watchlist.shortDescription, "</p>\n\t\t\t\t</div>\n\t\t\t\n\t\t\t\t<a href=", "https://ca.finance.yahoo.com/u/yahoo-finance/watchlists/".concat(watchlist.slug), " class='watchlistDetails'><button>View Watchlist</button></a>\n\n            </div>");
       $(".watchlistsContainer").append(HTMLtoAppend);
-      $(".watchlistProfile").click(function (e) {
-        e.stopImmediatePropagation();
-        e.preventDefault();
-        Swal.fire({
-          title: watchlist.name,
-          text: $("<div>").html(watchlist.description).text(),
-          icon: "info",
-          width: 600,
-          confirmButtonText: "Return to Watchlists"
-        });
-      });
     });
     $("#watchlists").addClass("show");
     $("#watchlists").removeClass("hidden");
+    $("#footer").removeClass("hidden");
+    $("#footer").addClass("show");
   });
 }; // Function to handle and register stock symbol from text input
 
@@ -337,6 +294,7 @@ app.getSelectValue = function () {
         text: "It appears that ".concat(app.symbol, " is not a listed US security. Most symbols traded in the US have a symbol length between 1 and 5 characters. Did you mean ").concat(app.symbol.slice(0, 5), "?"),
         icon: "warning",
         confirmButtonText: "Continue",
+        width: 400,
         timer: 5000,
         timerProgressBar: true
       });
@@ -373,6 +331,7 @@ app.getSummary = function () {
         title: "Error!",
         text: "It appears that ".concat(app.symbol, " is not a listed US security. Try another symbol."),
         icon: "warning",
+        width: 400,
         confirmButtonText: "Continue",
         timer: 3000,
         timerProgressBar: true
@@ -400,6 +359,7 @@ app.getSummary = function () {
         title: "Error!",
         text: "It appears that ".concat(app.symbol, " is not a listed US security. It trades on ").concat(exchange, ". Try another symbol."),
         icon: "warning",
+        width: 400,
         confirmButtonText: "Continue",
         timer: 3000,
         timerProgressBar: true
@@ -471,13 +431,12 @@ app.getSummary = function () {
           title: "Error!",
           text: "It appears that ".concat(app.symbol, " is not an active US security. Try another symbol."),
           icon: "warning",
+          width: 400,
           confirmButtonText: "Continue",
           timer: 3000,
           timerProgressBar: true
         });
         $("#symbol").val("");
-        $(".profileInformation").addClass("show");
-        $(".profileInformation").removeClass("hidden");
       } else {
         // Populate quotesContent with values
         app.populate = function () {
@@ -550,10 +509,8 @@ app.getSummary = function () {
           $(".daysRange").text("$".concat(availableValuesObj.regularMarketDayLow, " - $").concat(availableValuesObj.regularMarketDayHigh));
           $(".fiftyTwoWeekRange").text("$".concat(availableValuesObj.fiftyTwoWeekLow, " - $").concat(availableValuesObj.fiftyTwoWeekHigh));
           $(".regularMarketVolume").text("".concat(availableValuesObj.regularMarketVolume.toLocaleString("en-US")));
-          $(".averageVolume10Day").text("".concat(availableValuesObj.averageVolume10Day.toLocaleString("en-US"))); // Hides news, displays quotesContent and sets symbol
+          $(".averageVolume10Day").text("".concat(availableValuesObj.averageVolume10Day.toLocaleString("en-US"))); // Displays quotesContent and sets symbol
 
-          $("#news").addClass("hidden");
-          $("#news").removeClass("show");
           $("#quotesContent").addClass("show");
           $("#quotesContent").removeClass("hidden");
           $(".symbol").text("".concat(app.symbol));
@@ -611,6 +568,7 @@ app.getChart = function () {
         title: "Error!",
         text: "It appears that ".concat(app.symbol, " does not have updated chart information."),
         icon: "warning",
+        width: 400,
         confirmButtonText: "Continue",
         timer: 3000,
         timerProgressBar: true
@@ -627,6 +585,7 @@ app.getChart = function () {
           title: "Error!",
           text: "It appears that ".concat(app.symbol, " is not an active US security. It may have been delisted. Try another symbol."),
           icon: "warning",
+          width: 400,
           confirmButtonText: "Continue",
           timer: 3000,
           timerProgressBar: true
@@ -687,6 +646,7 @@ app.getChart = function () {
         title: "Error!",
         text: "It appears that ".concat(app.symbol, " is missing chart data for parts of the regular market open."),
         icon: "warning",
+        width: 400,
         confirmButtonText: "Continue",
         timer: 3000,
         timerProgressBar: true
@@ -784,6 +744,7 @@ app.getProfile = function () {
         title: "Error!",
         text: "It appears that ".concat(app.symbol, " is missing information from its profile."),
         icon: "warning",
+        width: 400,
         confirmButtonText: "Continue",
         timer: 3000,
         timerProgressBar: true
@@ -802,7 +763,7 @@ app.getProfile = function () {
           title: "Profile for ".concat(app.symbol, ":"),
           text: app.companyDescription,
           icon: "info",
-          width: 600,
+          width: 400,
           confirmButtonText: "Return to Quote"
         });
       });
@@ -932,7 +893,6 @@ app.epochToDate = function (epoch) {
 
 
 app.init = function () {
-  this.getNews();
   this.getWatchlists();
   this.getMovers();
   this.getSelectValue();
@@ -970,7 +930,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61879" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58205" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

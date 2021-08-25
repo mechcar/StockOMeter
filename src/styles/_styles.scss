@@ -10,22 +10,8 @@ body {
 }
 
 header {
-	height: 5rem;
-	margin-top: clamp(3rem, 2.2473rem + 2.1505vw, 5rem);
 	display: flex;
-	align-items: center;
-	justify-content: space-evenly;
-
-	.poweredBy {
-		display: flex;
-		align-items: center;
-		width: clamp(12rem, -5.9487rem + 35.8974vw, 40rem);
-	}
-	img {
-		height: clamp(3.5rem, 2.5385rem + 1.9231vw, 5rem);
-		width: clamp(3.5rem, 2.5385rem + 1.9231vw, 5rem);
-		margin-right: clamp(0.5rem, -0.1410rem + 1.2821vw, 1.5rem);
-	}
+	justify-content: center;
 
 	a {
 		text-decoration: none;
@@ -35,11 +21,8 @@ header {
 			background-clip: text;
 			-webkit-background-clip: text;
 			-webkit-text-fill-color: transparent;
-			width: clamp(28rem, -2.1282rem + 60.2564vw, 75rem);
-			margin: 0;
 		}
 	}
-
 }
 
 .query {
@@ -49,7 +32,7 @@ header {
 	.queryContainer {
 		display: flex;
 		flex-direction: column;
-		margin-top: clamp(3rem, 2.2473rem + 2.1505vw, 5rem);
+		padding-top: 1.8rem;
 	}
 
 	form {
@@ -85,16 +68,21 @@ header {
 
 	.marketStatusContainer {
 		h2 {
-			margin-top: 1.5rem;
+			margin-top: 2.5rem;
 			margin-bottom: 0;
 		}
 	}
 
 	.movers {
-		padding-top: 3.7rem;
 		display: flex;
 		justify-content: space-evenly;
 		width: 70rem;
+
+		button {
+			border-radius: 0.5rem;
+			border: none;
+			margin-bottom: 0.3rem;
+		}
 
 		.gainers,
 		.losers {
@@ -126,30 +114,47 @@ header {
 	}
 }
 
-.news {
+.watchlists {
 	display: flex;
-	justify-content: center;
-	text-align: center;
-	color: black;
-	outline: 2px solid black;
-	padding: 1rem 0;
+	flex-direction: column;
+	align-items: center;
 
-	.articleTickers {
+	.watchlistsContainer {
 		display: flex;
+		justify-content: space-evenly;
 		flex-wrap: wrap;
-		justify-content: center;
-	}
-	button {
-		background-color: rgb(180, 34, 136);
-		margin: 0 1.5rem;
-	}
 
-	button:hover,
-	button:focus {
-		color: black;
-	}
-	button:focus {
-		border: 0.1rem solid black;
+		.popularWatchlist {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
+			justify-content: space-between;
+			padding: 0 2rem 2rem 2rem;
+			width: clamp(15rem, 11.7949rem + 6.4103vw, 20rem);
+
+			img {
+				width: 10rem;
+				height: 15rem;
+			}
+		}
+
+		button {
+			background-color: rgb(70, 70, 116);
+			width: clamp(10rem, 8.871rem + 3.2258vw, 13rem);
+			padding: clamp(0.5rem, 0.4059rem + 0.2688vw, 0.75rem) 0;
+			border-radius: 0.5rem;
+			border: none;
+		}
+
+		button:hover,
+		button:focus {
+			color: black;
+		}
+
+		button:focus {
+			border: 0.1rem solid black;
+		}
 	}
 }
 
@@ -157,6 +162,7 @@ header {
 	display: flex;
 	position: relative;
 	line-height: 1.6rem;
+	padding-bottom: 2.5rem;
 }
 
 .values {
@@ -221,18 +227,21 @@ header {
 	min-height: 400px;
 }
 
-button {
-	border-radius: 0.5rem;
-	border: none;
-	margin-bottom: 0.3rem;
-}
-
 .hidden {
 	display: none;
+	height: 0;
 }
 
 .show {
 	display: flex;
+	height: 100%;
+}
+
+.showMostActive {
+	display: flex;
+	height: 100%;
+	flex-direction: column;
+	align-items: center;
 }
 
 .showMarketClosed {
@@ -246,6 +255,22 @@ button {
 
 .negativeValue {
 	color: red;
+}
+
+footer {
+	display: flex;
+	padding: 5rem 0 3rem 0;
+	.poweredBy {
+		display: flex;
+		align-items: center;
+		width: clamp(18rem, 14.2366rem + 10.7527vw, 28rem);
+
+		img {
+			height: clamp(3.5rem, 2.5385rem + 1.9231vw, 5rem);
+			width: clamp(3.5rem, 2.5385rem + 1.9231vw, 5rem);
+			margin-right: clamp(0.5rem, -0.141rem + 1.2821vw, 1.5rem);
+		}
+	}
 }
 
 @media screen and (max-width: 850px) {
@@ -290,38 +315,19 @@ button {
 			justify-content: space-evenly;
 		}
 	}
+
+	footer {
+		justify-content: center;
+	}
 }
 
 @media screen and (max-width: 500px) {
-	header {
-		flex-direction: column-reverse;
-		align-content: center;
-
-		.poweredBy {
-			display: flex;
-			justify-content: center;
-			padding-top: 2.5%;
-			width: 20rem;
-
-			img {
-				height: 2.5rem;
-				width: 2.5rem;
-			}
-		}
-
-		h1 {
-			width: 30rem;
-			display: flex;
-			justify-content: center;
-		}
-	}
-
 	.queryContainer {
 		align-items: center;
-	}
 
-	.articleTicker {
-		padding: 1rem 0;
+		.marketStatusContainer{
+			text-align: center;
+		}
 	}
 
 	.quote {

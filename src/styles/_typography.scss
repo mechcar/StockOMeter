@@ -7,12 +7,11 @@ body {
 	color: white;
 }
 
-.poweredBy h3 {
-	font-size: clamp(1rem, 0.7742rem + 0.6452vw, 1.6rem);
-}
+
 
 header h1 {
-	font-size: clamp(3rem, 2.2473rem + 2.1505vw, 5rem);}
+	font-size: clamp(3.5rem, 2.9355rem + 1.6129vw, 5rem);
+}
 
 h2,
 .symbol,
@@ -32,19 +31,22 @@ input {
 	font-size: 1.6rem;
 }
 
-.movers, .articleTickers {
+.movers {
 	font-size: clamp(1.2rem, 1.0495rem + 0.4301vw, 1.6rem);
 }
 
-.news {
+.watchlists {
+	h2 {
+		font-size: clamp(2.4rem, 2.1742rem + 0.6452vw, 3rem);
+	}
 	h3 {
-		font-size: clamp(2rem, 1.7742rem + 0.6452vw, 2.6rem);
+		font-size: clamp(1.4rem, 1.1436rem + 0.5128vw, 1.8rem);
 	}
 	p {
-		font-size: clamp(1.6rem, 1.4495rem + 0.4301vw, 2rem);
+		font-size: clamp(1.2rem, 1.1247rem + 0.2151vw, 1.4rem);
 	}
-	a {
-		font-size: clamp(1.4rem, 1.3247rem + 0.2151vw, 1.6rem);
+	button {
+		font-size: clamp(1.2rem, 1.0495rem + 0.4301vw, 1.6rem);
 	}
 }
 
@@ -104,4 +106,16 @@ footer a {
 footer a {
 	text-decoration: none;
 	color: white;
+
+	.poweredBy h3 {
+		font-size: clamp(1rem, 0.7742rem + 0.6452vw, 1.6rem);
+	}
+}
+
+@media screen and (max-width: 500px) {
+	.watchlists {
+	}
+	h3 {
+		font-size: clamp(1.2rem, 1rem + 0.8vw, 1.4rem);
+	}
 }
