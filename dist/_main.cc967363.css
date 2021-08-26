@@ -569,7 +569,6 @@ header a h1 {
 }
 
 .graph {
-  width: clamp(40rem, 0.4651rem + 46.5116vw, 60rem);
   min-height: 400px;
 }
 
@@ -632,11 +631,15 @@ footer .poweredBy img {
   .values .quotesContent .stockData {
     display: flex;
     flex-direction: row;
+    align-content: center;
     align-items: end;
     justify-content: space-around;
   }
-  .values .graph {
-    width: clamp(30rem, 9rem + 60vw, 60rem);
+  .values .chart {
+    justify-content: center;
+  }
+  .values .chart .graph {
+    width: clamp(27.5rem, 15.2688rem + 34.9462vw, 60rem);
   }
 }
 @media screen and (max-width: 750px) {
@@ -665,12 +668,6 @@ footer .poweredBy img {
     text-align: center;
   }
 
-  .quote {
-    justify-content: center;
-  }
-  .quote .values {
-    justify-content: center;
-  }
   .quote .values .quotesContent,
 .quote .values .chart {
     padding-bottom: 10%;
