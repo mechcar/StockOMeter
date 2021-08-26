@@ -528,7 +528,7 @@ app.getSummary = function () {
             $(".regularMarketPriceHeader").addClass("hidden");
             $(".closePrice").text("".concat(availableValuesObj.price));
             $(".closeHeader").removeClass("hidden");
-            $(".closeHeader").addClass("show"); // Applying CSS class negativeValue to close price if day's change was negative
+            $(".closeHeader").addClass("showMarketClosed"); // Applying CSS class negativeValue to close price if day's change was negative
 
             if (values.regularMarketChange < 0) {
               $(".closePrice").addClass("negativeValue");
@@ -930,7 +930,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58205" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62371" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

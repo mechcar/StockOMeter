@@ -84,28 +84,28 @@ header {
 			margin-bottom: 0.3rem;
 		}
 
+		button:hover,
+		button:focus {
+			color: black;
+		}
+
+		button:focus {
+			border: 0.1rem solid black;
+		}
+
 		.gainers,
 		.losers {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-		}
 
-		.movers button:hover,
-		.movers button:focus {
-			color: black;
-		}
+			.gainer button {
+				background: green;
+			}
 
-		.movers button:focus {
-			border: 0.1rem solid black;
-		}
-
-		.gainer button {
-			background: green;
-		}
-
-		.loser button {
-			background: red;
+			.loser button {
+				background: red;
+			}
 		}
 
 		.mostActive button {
@@ -163,57 +163,57 @@ header {
 	position: relative;
 	line-height: 1.6rem;
 	padding-bottom: 2.5rem;
-}
 
-.values {
-	display: flex;
-	justify-content: space-between;
-	width: clamp(31.5rem, 0rem + 90vw, 115.2rem);
-}
-
-.quotesContent {
-	flex-direction: column;
-	width: clamp(30rem, 18.0612rem + 39.7959vw, 69rem);
-
-	h1,
-	h3 {
-		margin-top: clamp(1.25rem, 1.0618rem + 0.5376vw, 1.75rem);
-		margin-bottom: 0;
-	}
-}
-
-.quoteHeading {
-	display: flex;
-	flex-direction: column;
-	padding-top: 1rem;
-
-	.quoteTitle {
+	.values {
 		display: flex;
-		align-items: center;
-		align-content: center;
+		justify-content: space-between;
+		width: clamp(31.5rem, 0rem + 90vw, 115.2rem);
 
-		h1 {
-			width: 15rem;
-		}
-		.profileInformation button {
-			background-color: #4f00ab;
-			padding: 0.2rem 0.5rem;
-			margin-bottom: 0;
-		}
+		.quotesContent {
+			flex-direction: column;
+			width: clamp(30rem, 18.0612rem + 39.7959vw, 69rem);
 
-		.profileInformation button:hover,
-		.profileInformation button:focus {
-			background-color: black;
-			color: white;
-		}
+			h1,
+			h3 {
+				margin-top: clamp(1.25rem, 1.0618rem + 0.5376vw, 1.75rem);
+				margin-bottom: 0;
+			}
 
-		.profileInformation button:focus {
-			border: 1px solid black;
-		}
-	}
+			.quoteHeading {
+				display: flex;
+				flex-direction: column;
+				padding-top: 1rem;
 
-	h1 {
-		margin: 0;
+				.quoteTitle {
+					display: flex;
+					align-items: center;
+					align-content: center;
+
+					h1 {
+						width: 15rem;
+					}
+					.profileInformation button {
+						background-color: #4f00ab;
+						padding: 0.2rem 0.5rem;
+						margin-bottom: 0;
+					}
+
+					.profileInformation button:hover,
+					.profileInformation button:focus {
+						background-color: black;
+						color: white;
+					}
+
+					.profileInformation button:focus {
+						border: 1px solid black;
+					}
+				}
+
+				h1 {
+					margin: 0;
+				}
+			}
+		}
 	}
 }
 
@@ -246,7 +246,6 @@ header {
 
 .showMarketClosed {
 	display: flex;
-	justify-content: space-around;
 }
 
 .positiveValue {
@@ -325,7 +324,7 @@ footer {
 	.queryContainer {
 		align-items: center;
 
-		.marketStatusContainer{
+		.marketStatusContainer {
 			text-align: center;
 		}
 	}

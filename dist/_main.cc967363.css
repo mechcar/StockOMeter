@@ -450,23 +450,25 @@ header a h1 {
   border: none;
   margin-bottom: 0.3rem;
 }
+.query .movers button:hover,
+.query .movers button:focus {
+  color: black;
+}
+.query .movers button:focus {
+  border: 0.1rem solid black;
+}
 .query .movers .gainers,
 .query .movers .losers {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.query .movers .movers button:hover,
-.query .movers .movers button:focus {
-  color: black;
-}
-.query .movers .movers button:focus {
-  border: 0.1rem solid black;
-}
-.query .movers .gainer button {
+.query .movers .gainers .gainer button,
+.query .movers .losers .gainer button {
   background: green;
 }
-.query .movers .loser button {
+.query .movers .gainers .loser button,
+.query .movers .losers .loser button {
   background: red;
 }
 .query .movers .mostActive button {
@@ -517,50 +519,47 @@ header a h1 {
   line-height: 1.6rem;
   padding-bottom: 2.5rem;
 }
-
-.values {
+.quote .values {
   display: flex;
   justify-content: space-between;
   width: clamp(31.5rem, 0rem + 90vw, 115.2rem);
 }
-
-.quotesContent {
+.quote .values .quotesContent {
   flex-direction: column;
   width: clamp(30rem, 18.0612rem + 39.7959vw, 69rem);
 }
-.quotesContent h1,
-.quotesContent h3 {
+.quote .values .quotesContent h1,
+.quote .values .quotesContent h3 {
   margin-top: clamp(1.25rem, 1.0618rem + 0.5376vw, 1.75rem);
   margin-bottom: 0;
 }
-
-.quoteHeading {
+.quote .values .quotesContent .quoteHeading {
   display: flex;
   flex-direction: column;
   padding-top: 1rem;
 }
-.quoteHeading .quoteTitle {
+.quote .values .quotesContent .quoteHeading .quoteTitle {
   display: flex;
   align-items: center;
   align-content: center;
 }
-.quoteHeading .quoteTitle h1 {
+.quote .values .quotesContent .quoteHeading .quoteTitle h1 {
   width: 15rem;
 }
-.quoteHeading .quoteTitle .profileInformation button {
+.quote .values .quotesContent .quoteHeading .quoteTitle .profileInformation button {
   background-color: #4f00ab;
   padding: 0.2rem 0.5rem;
   margin-bottom: 0;
 }
-.quoteHeading .quoteTitle .profileInformation button:hover,
-.quoteHeading .quoteTitle .profileInformation button:focus {
+.quote .values .quotesContent .quoteHeading .quoteTitle .profileInformation button:hover,
+.quote .values .quotesContent .quoteHeading .quoteTitle .profileInformation button:focus {
   background-color: black;
   color: white;
 }
-.quoteHeading .quoteTitle .profileInformation button:focus {
+.quote .values .quotesContent .quoteHeading .quoteTitle .profileInformation button:focus {
   border: 1px solid black;
 }
-.quoteHeading h1 {
+.quote .values .quotesContent .quoteHeading h1 {
   margin: 0;
 }
 
@@ -593,7 +592,6 @@ header a h1 {
 
 .showMarketClosed {
   display: flex;
-  justify-content: space-around;
 }
 
 .positiveValue {

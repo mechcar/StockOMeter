@@ -563,7 +563,7 @@ app.getSummary = function () {
 					$(".regularMarketPriceHeader").addClass("hidden");
 					$(".closePrice").text(`${availableValuesObj.price}`);
 					$(".closeHeader").removeClass("hidden");
-					$(".closeHeader").addClass("show");
+					$(".closeHeader").addClass("showMarketClosed");
 
 					// Applying CSS class negativeValue to close price if day's change was negative
 					if (values.regularMarketChange < 0) {
