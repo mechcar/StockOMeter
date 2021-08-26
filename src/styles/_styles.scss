@@ -55,6 +55,10 @@ header {
 			border-radius: 0.5rem;
 		}
 
+		input[type="submit"]:hover {
+			cursor: pointer;
+		}
+
 		input[type="submit"]:hover,
 		input[type="submit"]:focus {
 			background: rgb(82, 79, 79);
@@ -82,6 +86,10 @@ header {
 			border-radius: 0.5rem;
 			border: none;
 			margin-bottom: 0.3rem;
+		}
+
+		button:hover {
+			cursor: pointer;
 		}
 
 		button:hover,
@@ -147,6 +155,10 @@ header {
 			border: none;
 		}
 
+		button:hover {
+			cursor: pointer;
+		}
+
 		button:hover,
 		button:focus {
 			color: black;
@@ -170,7 +182,6 @@ header {
 
 		.quotesContent {
 			flex-direction: column;
-			width: clamp(30rem, 18.0612rem + 39.7959vw, 69rem);
 
 			h1,
 			h3 {
@@ -191,10 +202,15 @@ header {
 					h1 {
 						width: 15rem;
 					}
+
 					.profileInformation button {
 						background-color: #4f00ab;
 						padding: 0.2rem 0.5rem;
 						margin-bottom: 0;
+					}
+
+					.profileInformation button:hover {
+						cursor: pointer;
 					}
 
 					.profileInformation button:hover,
@@ -339,7 +355,6 @@ footer {
 			}
 
 			.quotesContent {
-				width: clamp(45rem, -12.1429rem + 114.2857vw, 85rem);
 
 				.quoteHeading {
 					text-align: center;
