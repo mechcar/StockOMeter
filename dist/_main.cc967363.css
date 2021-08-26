@@ -339,7 +339,7 @@ label,
 .regularMarketVolume,
 .averageVolume10Day,
 .closePrice {
-  font-size: clamp(1.6rem, 1.4163rem + 0.6122vw, 2.2rem);
+  font-size: clamp(1.6rem, 1.5247rem + 0.2151vw, 1.8rem);
 }
 
 .symbol,
@@ -517,12 +517,11 @@ header a h1 {
   display: flex;
   position: relative;
   line-height: 1.6rem;
-  padding-bottom: 2.5rem;
+  justify-content: center;
 }
 .quote .values {
   display: flex;
   justify-content: space-between;
-  width: clamp(31.5rem, 0rem + 90vw, 115.2rem);
 }
 .quote .values .quotesContent {
   flex-direction: column;
@@ -625,9 +624,6 @@ footer .poweredBy img {
 .values .chart {
     padding-bottom: 10%;
   }
-  .values .quotesContent {
-    width: clamp(45rem, -12.1429rem + 114.2857vw, 85rem);
-  }
   .values .quotesContent .stockData {
     display: flex;
     flex-direction: row;
@@ -670,7 +666,7 @@ footer .poweredBy img {
 
   .quote .values .quotesContent,
 .quote .values .chart {
-    padding-bottom: 10%;
+    padding-bottom: 5rem;
   }
   .quote .values .quotesContent {
     width: clamp(45rem, -12.1429rem + 114.2857vw, 85rem);

@@ -162,12 +162,11 @@ header {
 	display: flex;
 	position: relative;
 	line-height: 1.6rem;
-	padding-bottom: 2.5rem;
+	justify-content: center;
 
 	.values {
 		display: flex;
 		justify-content: space-between;
-		width: clamp(31.5rem, 0rem + 90vw, 115.2rem);
 
 		.quotesContent {
 			flex-direction: column;
@@ -283,9 +282,6 @@ footer {
 		}
 
 		.quotesContent {
-			width: clamp(45rem, -12.1429rem + 114.2857vw, 85rem);
-
-
 			.stockData {
 				display: flex;
 				flex-direction: row;
@@ -336,15 +332,10 @@ footer {
 	}
 
 	.quote {
-	
-		
-
 		.values {
-			
-
 			.quotesContent,
 			.chart {
-				padding-bottom: 10%;
+				padding-bottom: 5rem;
 			}
 
 			.quotesContent {
